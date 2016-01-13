@@ -49,14 +49,14 @@ namespace Prefetch
             switch (ver)
             {
                 case (int)Version.WinXpOrWin2K3:
-                    pf = new Version17(rawBytes);
+                    pf = new Version17(rawBytes,file);
                     break;
                 case (int)Version.VistaOrWin7:
                     break;
                 case (int)Version.Win8x:
                     break;
                 case (int)Version.Win10:
-                    pf = new Version30(rawBytes);
+                    pf = new Version30(rawBytes,file);
                     break;
                 default:
                     throw new Exception($"Unknown version '{ver:X}'");

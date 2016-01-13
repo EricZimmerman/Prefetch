@@ -32,11 +32,30 @@ namespace Prefetch
             System.IO.File.WriteAllBytes(file, RawBytes);
         }
 
-        public Version17(byte[] rawBytes)
+        public Version17(byte[] rawBytes, string sourceFilename)
         {
+            SourceFilename = sourceFilename;
+
             RawBytes = rawBytes;
             Version = Version.WinXpOrWin2K3;
             Signature = "SCCA";
+
+            var index = 0;
+
+            index += 4; //version
+            index += 4; //signature
+            index += 4; //unknown
+
+            FileSize = BitConverter.ToInt32(rawBytes, index);
+            index += 4;
+
+            var tempName = Encoding.Unicode.GetString(rawBytes, index, 60);
+            ExecutableFilename = tempName.Substring(0, tempName.IndexOf('\0')).Trim();
+
+            index += 60;
+
+            Hash = BitConverter.ToInt32(rawBytes, index).ToString("X");
+
 
 
         }

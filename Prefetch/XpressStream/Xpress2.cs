@@ -37,7 +37,6 @@ namespace Prefetch.XpressStream
                 return outBuf;
             }
 
-
             return null;
         }
      

@@ -26,10 +26,9 @@ namespace Prefetch.Test
             foreach (var file in Directory.GetFiles(@"..\..\TestFiles\Win10","*.pf"))
             {
                 var pf = Prefetch.Open(file);
-
+                pf.SourceFilename.Should().Be(file);
                 pf.Version.Should().Be(Version.Win10);
             }
-            
         }
 
         [Test]
@@ -39,9 +38,12 @@ namespace Prefetch.Test
             {
                 var pf = Prefetch.Open(file);
 
+                pf.SourceFilename.Should().Be(file);
+
                 pf.Version.Should().Be(Version.WinXpOrWin2K3);
             }
-
         }
+
+
     }
 }
