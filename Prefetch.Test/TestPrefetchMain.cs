@@ -27,7 +27,7 @@ namespace Prefetch.Test
             {
                 var pf = Prefetch.Open(file);
                 pf.SourceFilename.Should().Be(file);
-                pf.Version.Should().Be(Version.Win10);
+                pf.Header.Version.Should().Be(Version.Win10);
             }
         }
 
@@ -40,9 +40,28 @@ namespace Prefetch.Test
 
                 pf.SourceFilename.Should().Be(file);
 
-                pf.Version.Should().Be(Version.WinXpOrWin2K3);
+                pf.Header.Version.Should().Be(Version.WinXpOrWin2K3);
             }
         }
+
+        [Test]
+        public void SignatureShouldBeSCCA()
+        {
+            foreach (var file in Directory.GetFiles(@"..\..\TestFiles\XPPro", "*.pf"))
+            {
+                var pf = Prefetch.Open(file);
+
+                pf.Header.Signature.Should().Be("SCCA");
+            }
+
+            foreach (var file in Directory.GetFiles(@"..\..\TestFiles\Win10", "*.pf"))
+            {
+                var pf = Prefetch.Open(file);
+
+                pf.Header.Signature.Should().Be("SCCA");
+            }
+        }
+
 
 
     }

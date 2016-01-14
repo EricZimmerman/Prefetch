@@ -17,16 +17,9 @@ namespace Prefetch
  public   interface IPrefetch
     {
         byte[] RawBytes { get; }
-        Version Version { get; }
-        string Signature { get;  }
-
         string SourceFilename { get; }
 
-        int FileSize { get; }
-
-        string ExecutableFilename { get; }
-
-        string Hash { get; }
+    Header Header { get; }
 
         int FileMetricsOffset { get; }
 

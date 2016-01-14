@@ -9,12 +9,10 @@ namespace Prefetch
    public class Version30:IPrefetch
     {
         public byte[] RawBytes { get; }
-        public Version Version { get; private set; }
-        public string Signature { get; private set; }
+        
         public string SourceFilename { get; }
-        public int FileSize { get; }
-        public string ExecutableFilename { get; }
-        public string Hash { get; }
+       public Header Header { get; }
+       
         public int FileMetricsOffset { get; }
         public int FileMetricsCount { get; }
         public int TraceChainsOffset { get; }
@@ -34,26 +32,11 @@ namespace Prefetch
 
        public Version30(byte[] rawBytes,string sourceFilename)
        {
-           SourceFilename = sourceFilename;
-           RawBytes = rawBytes;
-           Version = Version.Win10;
-           Signature = "SCCA";
+            SourceFilename = sourceFilename;
 
-            var index = 0;
+            RawBytes = rawBytes;
 
-            index += 4; //version
-            index += 4; //signature
-            index += 4; //unknown
-
-            FileSize = BitConverter.ToInt32(rawBytes, index);
-            index += 4;
-
-            var tempName = Encoding.Unicode.GetString(rawBytes, index, 60);
-            ExecutableFilename = tempName.Substring(0, tempName.IndexOf('\0')).Trim();
-
-            index += 60;
-
-            Hash = BitConverter.ToInt32(rawBytes, index).ToString("X");
+            Header = new Header(rawBytes.Take(84).ToArray());
 
 
 
