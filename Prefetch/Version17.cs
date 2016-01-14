@@ -8,6 +8,7 @@ namespace Prefetch
 {
     public class Version17 : IPrefetch
     {
+        
         public byte[] RawBytes { get; }
         
         public string SourceFilename { get; }
@@ -25,6 +26,12 @@ namespace Prefetch
         public List<DateTimeOffset> LastRunTimes { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
+        public string VolumeDeviceName { get; }
+        public DateTimeOffset VolumeCreatedOn { get; }
+        public string VolumeSerialNumber { get; }
+        public List<MFTInformation> FileReferences { get; }
+        public List<string> DirectoryNames { get; }
+
         public void SavePrefetch(string file)
         {
             System.IO.File.WriteAllBytes(file, RawBytes);
@@ -38,6 +45,124 @@ namespace Prefetch
             
             Header = new Header(rawBytes.Take(84).ToArray());
 
+            var fileInfoBytes = rawBytes.Skip(84).Take(68).ToArray();
+
+            FileMetricsOffset = BitConverter.ToInt32(fileInfoBytes, 0);
+            FileMetricsCount = BitConverter.ToInt32(fileInfoBytes, 4);
+
+            TraceChainsOffset = BitConverter.ToInt32(fileInfoBytes, 8);
+            TraceChainsCount = BitConverter.ToInt32(fileInfoBytes, 12);
+
+            FilenameStringsOffset = BitConverter.ToInt32(fileInfoBytes, 16);
+            FilenameStringsSize = BitConverter.ToInt32(fileInfoBytes, 20);
+
+            VolumesInfoOffset = BitConverter.ToInt32(fileInfoBytes, 24);
+            VolumeCount = BitConverter.ToInt32(fileInfoBytes, 28);
+
+            VolumesInfoSize = BitConverter.ToInt32(fileInfoBytes, 32);
+
+            var rawTime = BitConverter.ToInt64(fileInfoBytes, 36);
+
+            LastRunTimes = new List<DateTimeOffset>();
+
+            LastRunTimes.Add(DateTimeOffset.FromFileTime(rawTime));
+
+            RunCount = BitConverter.ToInt32(fileInfoBytes, 60);
+
+
+            //need to jump around now to get bytes for
+            //FileMetrics
+            //TraceChains
+            //FilenameString
+            //VolumesInfo
+
+
+            //TODO do something with stuff below here. relevant stuff must be moved to interface
+            
+            var fileMetricsBytes = rawBytes.Skip(84 + 68).Take(20).ToArray();
+            var fileNameStringOffset = BitConverter.ToInt32(fileMetricsBytes, 8);
+            var fileNameStringSize = BitConverter.ToInt32(fileMetricsBytes, 12);
+
+           
+            
+            var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12 * TraceChainsCount).ToArray();
+            var traceIndex = 0;
+            while (traceIndex<traceChainBytes.Length)
+            {
+                var nextIndex = BitConverter.ToInt32(traceChainBytes, traceIndex);
+                var totalBlockLoad = BitConverter.ToInt32(traceChainBytes, traceIndex+4);
+
+                if (nextIndex == -1)
+                {
+                    break;
+                }
+
+                traceIndex += 12;
+            }
+
+
+            var filenameStringsBytes = rawBytes.Skip(FilenameStringsOffset).Take(FilenameStringsSize).ToArray();
+
+            var filenamesRaw = Encoding.Unicode.GetString(filenameStringsBytes);
+            var fileNames = filenamesRaw.Split(new[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
+
+            Filenames = new List<string>();
+
+            Filenames.AddRange(fileNames);
+
+            var volumeInfoBytes = rawBytes.Skip(VolumesInfoOffset).Take(VolumesInfoSize).ToArray();
+            var volumeDevicePathOffset = BitConverter.ToInt32(volumeInfoBytes, 0);
+            var volDevicePathNumChars = BitConverter.ToInt32(volumeInfoBytes, 4);
+
+            VolumeDeviceName =
+                Encoding.Unicode.GetString(
+                    rawBytes.Skip(VolumesInfoOffset + volumeDevicePathOffset).Take(volDevicePathNumChars * 2).ToArray());
+
+            var ct = BitConverter.ToInt64(volumeInfoBytes, 8);
+           VolumeCreatedOn = DateTimeOffset.FromFileTime(ct);
+            
+           VolumeSerialNumber = BitConverter.ToInt32(volumeInfoBytes, 16).ToString("X");
+
+            var fileRefOffset = BitConverter.ToInt32(volumeInfoBytes, 20);
+            var fileRefSize = BitConverter.ToInt32(volumeInfoBytes, 24);
+
+
+            var dirStringsOffset = BitConverter.ToInt32(volumeInfoBytes, 28);
+            var numDirectoryStrings = BitConverter.ToInt32(volumeInfoBytes, 32);
+
+
+            //filerefs are at VolumesInfoOffset + fileRefOffset
+            var fileRefsIndex = VolumesInfoOffset + fileRefOffset;
+            var fileRefBytes = rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
+
+            var fileRefVer = BitConverter.ToInt32(rawBytes, 0);
+            var numFileRefs = BitConverter.ToInt32(rawBytes, 4);
+
+            var tempIndex = 8;
+
+            FileReferences = new List<MFTInformation>();
+
+            while (tempIndex<fileRefBytes.Length)
+            {
+                FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
+                tempIndex += 8;
+            }
+
+            DirectoryNames = new List<string>();
+
+            var dirStringsIndex = VolumesInfoOffset + dirStringsOffset;
+            var dirStringsBytes = rawBytes.Skip(dirStringsIndex).ToArray();
+
+            tempIndex = 0;
+            for (int i = 0; i < numDirectoryStrings; i++)
+            {
+                var dirCharCount = (BitConverter.ToInt16(dirStringsBytes, tempIndex) * 2) + 2; // double the count since its unicode and add 2 extra for null char
+                tempIndex += 2;
+                var dirName = Encoding.Unicode.GetString(dirStringsBytes,tempIndex,dirCharCount).Trim('\0');
+                DirectoryNames.Add(dirName);
+
+                tempIndex += dirCharCount;
+            }
 
         }
     }

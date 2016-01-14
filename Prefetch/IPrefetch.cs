@@ -49,9 +49,17 @@ namespace Prefetch
         List<string> Filenames { get; }
 
         //VolumesInfo list
-        //contains file reference list
-        //contains directory strings list
+        //TODO refactor into VolumesInfoClass to hold these things
 
-     void SavePrefetch(string file);
+            String VolumeDeviceName { get; }
+
+DateTimeOffset VolumeCreatedOn { get; }
+
+        string VolumeSerialNumber { get; }
+        
+        List<MFTInformation> FileReferences { get; }
+        List<string> DirectoryNames { get; }
+
+        void SavePrefetch(string file);
     }
 }

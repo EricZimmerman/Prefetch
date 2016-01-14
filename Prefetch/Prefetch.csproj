@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MFTInformation.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Prefetch.cs" />
     <Compile Include="IPrefetch.cs" />

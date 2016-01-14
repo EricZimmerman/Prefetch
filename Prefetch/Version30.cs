@@ -25,6 +25,12 @@ namespace Prefetch
         public List<DateTimeOffset> LastRunTimes { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
+       public string VolumeDeviceName { get; }
+       public DateTimeOffset VolumeCreatedOn { get; }
+       public string VolumeSerialNumber { get; }
+       public List<MFTInformation> FileReferences { get; }
+       public List<string> DirectoryNames { get; }
+
        public void SavePrefetch(string file)
        {
         System.IO.File.WriteAllBytes(file,RawBytes);
