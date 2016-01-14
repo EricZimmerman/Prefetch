@@ -39,6 +39,7 @@ namespace Prefetch.Test
                 var pf = Prefetch.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
+                Prefetch.DumpToJson(pf,true,@"d:\temp\out.txt");
 
                 pf.Header.Version.Should().Be(Version.WinXpOrWin2K3);
             }

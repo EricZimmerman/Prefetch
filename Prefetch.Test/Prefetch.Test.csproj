@@ -58,13 +58,17 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="TestFiles\Bad\notAPrefetch.pf" />
+    <None Include="TestFiles\VistaWin7\PING.EXE-B29F6629.pf" />
+    <None Include="TestFiles\VistaWin7\WUAUCLT.EXE-830BCC14.pf" />
     <None Include="TestFiles\Win10\CALC.EXE-3FBEF7FD.pf" />
     <None Include="TestFiles\Win10\CALCULATOR.EXE-6940BD5C.pf" />
     <None Include="TestFiles\Win10\CHROME.EXE-B3BA7868.pf" />
     <None Include="TestFiles\Win10\CMD.EXE-D269B812.pf" />
     <None Include="TestFiles\Win10\DCODEDCODEDCODEDCODEDCODEDCOD-E65B9FE8.pf" />
     <None Include="TestFiles\Win10\DEVENV.EXE-854D7862.pf" />
+    <None Include="TestFiles\Win8x\TASKHOST.EXE-3AE259FC.pf" />
     <None Include="TestFiles\XPPro\CALC.EXE-02CD573A.pf" />
+    <None Include="TestFiles\XPPro\CMD.EXE-087B4001.pf" />
     <None Include="TestFiles\XPPro\EXPLORER.EXE-082F38A9.pf" />
     <None Include="TestFiles\XPPro\MSIMN.EXE-38BA891D.pf" />
     <None Include="TestFiles\XPPro\MSMSGS.EXE-2B6052DE.pf" />

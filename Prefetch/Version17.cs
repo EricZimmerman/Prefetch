@@ -79,27 +79,28 @@ namespace Prefetch
 
             //TODO do something with stuff below here. relevant stuff must be moved to interface
             
-            var fileMetricsBytes = rawBytes.Skip(84 + 68).Take(20).ToArray();
-            var fileNameStringOffset = BitConverter.ToInt32(fileMetricsBytes, 8);
-            var fileNameStringSize = BitConverter.ToInt32(fileMetricsBytes, 12);
+            var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount * 20).ToArray();
+            var tempIndex = 0;
 
-           
-            
+            var fileMetrics = new List<FileMetric17>();
+
+            while (tempIndex < fileMetricsBytes.Length)
+            {
+                fileMetrics.Add(new FileMetric17(fileMetricsBytes.Skip(tempIndex).Take(20).ToArray()));
+                tempIndex += 20;
+            }
+
+
+            var traceChains = new List<TraceChain17>();
+
             var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12 * TraceChainsCount).ToArray();
             var traceIndex = 0;
-            while (traceIndex<traceChainBytes.Length)
+            while (traceIndex < traceChainBytes.Length)
             {
-                var nextIndex = BitConverter.ToInt32(traceChainBytes, traceIndex);
-                var totalBlockLoad = BitConverter.ToInt32(traceChainBytes, traceIndex+4);
-
-                if (nextIndex == -1)
-                {
-                    break;
-                }
+                traceChains.Add(new TraceChain17(traceChainBytes.Skip(traceIndex).Take(20).ToArray()));
 
                 traceIndex += 12;
             }
-
 
             var filenameStringsBytes = rawBytes.Skip(FilenameStringsOffset).Take(FilenameStringsSize).ToArray();
 
@@ -138,7 +139,7 @@ namespace Prefetch
             var fileRefVer = BitConverter.ToInt32(rawBytes, 0);
             var numFileRefs = BitConverter.ToInt32(rawBytes, 4);
 
-            var tempIndex = 8;
+            tempIndex = 8;
 
             FileReferences = new List<MFTInformation>();
 
