@@ -66,6 +66,11 @@
     <None Include="TestFiles\Win10\CMD.EXE-D269B812.pf" />
     <None Include="TestFiles\Win10\DCODEDCODEDCODEDCODEDCODEDCOD-E65B9FE8.pf" />
     <None Include="TestFiles\Win10\DEVENV.EXE-854D7862.pf" />
+    <None Include="TestFiles\Win2k3\CALC.EXE-02CD573A.pf" />
+    <None Include="TestFiles\Win2k3\CMD.EXE-087B4001.pf" />
+    <None Include="TestFiles\Win2k3\EXPLORER.EXE-082F38A9.pf" />
+    <None Include="TestFiles\Win2k3\MMC.EXE-0721152E.pf" />
+    <None Include="TestFiles\Win2k3\NOTEPAD.EXE-336351A9.pf" />
     <None Include="TestFiles\Win8x\TASKHOST.EXE-3AE259FC.pf" />
     <None Include="TestFiles\XPPro\CALC.EXE-02CD573A.pf" />
     <None Include="TestFiles\XPPro\CMD.EXE-087B4001.pf" />
