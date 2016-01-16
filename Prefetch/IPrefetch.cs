@@ -10,7 +10,7 @@ namespace Prefetch
     {
         WinXpOrWin2K3 = 17,
         VistaOrWin7 = 23,
-        Win8x = 26,
+        Win8xOrWin2012x = 26,
         Win10 = 30
     }
 

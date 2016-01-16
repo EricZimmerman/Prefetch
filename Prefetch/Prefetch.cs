@@ -67,7 +67,7 @@ namespace Prefetch
                     break;
                 case (int)Version.VistaOrWin7:
                     break;
-                case (int)Version.Win8x:
+                case (int)Version.Win8xOrWin2012x:
                     break;
                 case (int)Version.Win10:
                     pf = new Version30(rawBytes,file);

@@ -58,17 +58,10 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="TestFiles\Bad\notAPrefetch.pf" />
-    <None Include="TestFiles\VistaWin7\CALC.EXE-77FDF17F.pf" />
-    <None Include="TestFiles\VistaWin7\CMD.EXE-4A81B364.pf" />
-    <None Include="TestFiles\VistaWin7\CMD.EXE-89305D47.pf" />
-    <None Include="TestFiles\VistaWin7\DLLHOST.EXE-893DDF55.pf" />
-    <None Include="TestFiles\VistaWin7\DRVINST.EXE-5F8E77CD.pf" />
-    <None Include="TestFiles\VistaWin7\EXPLORER.EXE-7A3328DA.pf" />
-    <None Include="TestFiles\VistaWin7\EXPLORER.EXE-A80E4F97.pf" />
-    <None Include="TestFiles\VistaWin7\NOTEPAD.EXE-D8414F97.pf" />
-    <None Include="TestFiles\VistaWin7\NOTEPAD.EXE-EB1B961A.pf" />
-    <None Include="TestFiles\VistaWin7\PING.EXE-B29F6629.pf" />
-    <None Include="TestFiles\VistaWin7\WUAUCLT.EXE-830BCC14.pf" />
+    <None Include="TestFiles\Vista\CMD.EXE-89305D47.pf" />
+    <None Include="TestFiles\Vista\DLLHOST.EXE-893DDF55.pf" />
+    <None Include="TestFiles\Vista\EXPLORER.EXE-7A3328DA.pf" />
+    <None Include="TestFiles\Vista\NOTEPAD.EXE-EB1B961A.pf" />
     <None Include="TestFiles\Win10\CALC.EXE-3FBEF7FD.pf" />
     <None Include="TestFiles\Win10\CALCULATOR.EXE-6940BD5C.pf" />
     <None Include="TestFiles\Win10\CHROME.EXE-B3BA7868.pf" />
@@ -91,6 +84,13 @@
     <None Include="TestFiles\Win2k3\EXPLORER.EXE-082F38A9.pf" />
     <None Include="TestFiles\Win2k3\MMC.EXE-0721152E.pf" />
     <None Include="TestFiles\Win2k3\NOTEPAD.EXE-336351A9.pf" />
+    <None Include="TestFiles\Win7\CALC.EXE-77FDF17F.pf" />
+    <None Include="TestFiles\Win7\CMD.EXE-4A81B364.pf" />
+    <None Include="TestFiles\Win7\DRVINST.EXE-5F8E77CD.pf" />
+    <None Include="TestFiles\Win7\EXPLORER.EXE-A80E4F97.pf" />
+    <None Include="TestFiles\Win7\NOTEPAD.EXE-D8414F97.pf" />
+    <None Include="TestFiles\Win7\PING.EXE-B29F6629.pf" />
+    <None Include="TestFiles\Win7\WUAUCLT.EXE-830BCC14.pf" />
     <None Include="TestFiles\Win8x\CALC.EXE-77FDF17F.pf" />
     <None Include="TestFiles\Win8x\CMD.EXE-4A81B364.pf" />
     <None Include="TestFiles\Win8x\CONSENT.EXE-531BD9EA.pf" />

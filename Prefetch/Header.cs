@@ -33,8 +33,8 @@ namespace Prefetch
                 case (int)Version.VistaOrWin7:
                     Version = Version.VistaOrWin7;
                     break;
-                case (int)Version.Win8x:
-                    Version = Version.Win8x;
+                case (int)Version.Win8xOrWin2012x:
+                    Version = Version.Win8xOrWin2012x;
                     break;
                 case (int)Version.Win10:
                     Version = Version.Win10;
