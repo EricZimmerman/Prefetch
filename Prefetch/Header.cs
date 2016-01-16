@@ -1,46 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Prefetch
 {
-  public  class Header
+    public class Header
     {
-    public    Version Version { get; }
-        public string Signature { get; }
-
-        public int FileSize { get; }
-
-        public string ExecutableFilename { get; }
-
-        public string Hash { get; }
-
-      public Header(byte[] rawBytes)
-      {
-            
-
+        public Header(byte[] rawBytes)
+        {
             var index = 0;
 
             var ver = BitConverter.ToInt32(rawBytes, 0);
 
             switch (ver)
             {
-                case (int)Version.WinXpOrWin2K3:
+                case (int) Version.WinXpOrWin2K3:
                     Version = Version.WinXpOrWin2K3;
                     break;
-                case (int)Version.VistaOrWin7:
+                case (int) Version.VistaOrWin7:
                     Version = Version.VistaOrWin7;
                     break;
-                case (int)Version.Win8xOrWin2012x:
+                case (int) Version.Win8xOrWin2012x:
                     Version = Version.Win8xOrWin2012x;
                     break;
-                case (int)Version.Win10:
+                case (int) Version.Win10:
                     Version = Version.Win10;
                     break;
             }
-            
+
             index += 4; //version
 
             Signature = Encoding.ASCII.GetString(rawBytes, index, 4);
@@ -57,7 +43,15 @@ namespace Prefetch
             index += 60;
 
             Hash = BitConverter.ToInt32(rawBytes, index).ToString("X");
-
         }
+
+        public Version Version { get; }
+        public string Signature { get; }
+
+        public int FileSize { get; }
+
+        public string ExecutableFilename { get; }
+
+        public string Hash { get; }
     }
 }

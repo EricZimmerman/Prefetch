@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prefetch
 {
@@ -14,12 +11,12 @@ namespace Prefetch
         Win10 = 30
     }
 
- public   interface IPrefetch
+    public interface IPrefetch
     {
         byte[] RawBytes { get; }
         string SourceFilename { get; }
 
-    Header Header { get; }
+        Header Header { get; }
 
         int FileMetricsOffset { get; }
 
@@ -40,7 +37,7 @@ namespace Prefetch
         int VolumesInfoSize { get; }
 
         List<DateTimeOffset> LastRunTimes { get; }
-        
+
         int RunCount { get; }
 
         //FileMetricsArray list
@@ -51,14 +48,13 @@ namespace Prefetch
         //VolumesInfo list
         //TODO refactor into VolumesInfoClass to hold these things
 
-            String VolumeDeviceName { get; }
+        string VolumeDeviceName { get; }
 
-DateTimeOffset VolumeCreatedOn { get; }
+        DateTimeOffset VolumeCreatedOn { get; }
 
         string VolumeSerialNumber { get; }
-        
+
         List<MFTInformation> FileReferences { get; }
         List<string> DirectoryNames { get; }
-
     }
 }

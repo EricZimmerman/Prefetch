@@ -29,8 +29,8 @@ namespace Prefetch
             }
             else
             {
-                entryIndex2 = (entryIndex2 * 16777216); //2^24
-                entryIndex = (entryIndex1 + entryIndex2);
+                entryIndex2 = entryIndex2*16777216; //2^24
+                entryIndex = entryIndex1 + entryIndex2;
             }
 
             MFTEntryNumber = entryIndex;

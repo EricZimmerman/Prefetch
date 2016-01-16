@@ -148,7 +148,6 @@ namespace Prefetch.Test
                     pf.Header.Signature.Should().Be("SCCA");
                 }
             }
-
         }
 
 

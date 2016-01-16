@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prefetch
 {
     public class Version26 : IPrefetch
     {
+        public Version26(byte[] rawBytes, string sourceFilename)
+        {
+            SourceFilename = sourceFilename;
+
+            RawBytes = rawBytes;
+
+            Header = new Header(rawBytes.Take(84).ToArray());
+        }
+
         public byte[] RawBytes { get; }
 
         public string SourceFilename { get; }
@@ -30,19 +37,5 @@ namespace Prefetch
         public string VolumeSerialNumber { get; }
         public List<MFTInformation> FileReferences { get; }
         public List<string> DirectoryNames { get; }
-
-
-
-        public Version26(byte[] rawBytes, string sourceFilename)
-        {
-            SourceFilename = sourceFilename;
-
-            RawBytes = rawBytes;
-
-            Header = new Header(rawBytes.Take(84).ToArray());
-
-
-
-        }
     }
 }

@@ -6,15 +6,18 @@ namespace Prefetch.XpressStream
     {
 //        const ushort COMPRESSION_FORMAT_LZNT1 = 2;
 //        const ushort COMPRESSION_FORMAT_XPRESS = 3;
-        const ushort CompressionFormatXpressHuff = 4;
+        private const ushort CompressionFormatXpressHuff = 4;
 
         [DllImport("ntdll.dll")]
-        private static extern uint RtlGetCompressionWorkSpaceSize(ushort compressionFormat, ref ulong compressBufferWorkSpaceSize, ref ulong compressFragmentWorkSpaceSize);
+        private static extern uint RtlGetCompressionWorkSpaceSize(ushort compressionFormat,
+            ref ulong compressBufferWorkSpaceSize, ref ulong compressFragmentWorkSpaceSize);
 
         [DllImport("ntdll.dll")]
-        private static extern uint RtlDecompressBufferEx(ushort compressionFormat, byte[] uncompressedBuffer, int uncompressedBufferSize, byte[] compressedBuffer, int compressedBufferSize, ref int finalUncompressedSize, byte[] workSpace);
+        private static extern uint RtlDecompressBufferEx(ushort compressionFormat, byte[] uncompressedBuffer,
+            int uncompressedBufferSize, byte[] compressedBuffer, int compressedBufferSize, ref int finalUncompressedSize,
+            byte[] workSpace);
 
-        public static byte[] Decompress(byte[] buffer,ulong decompressedSize)
+        public static byte[] Decompress(byte[] buffer, ulong decompressedSize)
         {
             // our uncompressed data will go here
             var outBuf = new byte[decompressedSize];
@@ -22,7 +25,8 @@ namespace Prefetch.XpressStream
             ulong compressFragmentWorkSpaceSize = 0;
 
             //get the size of what our workspace needs to be
-            var ret = RtlGetCompressionWorkSpaceSize(CompressionFormatXpressHuff, ref compressBufferWorkSpaceSize, ref compressFragmentWorkSpaceSize);
+            var ret = RtlGetCompressionWorkSpaceSize(CompressionFormatXpressHuff, ref compressBufferWorkSpaceSize,
+                ref compressFragmentWorkSpaceSize);
             if (ret != 0)
             {
                 return null;
@@ -31,7 +35,8 @@ namespace Prefetch.XpressStream
             var workSpace = new byte[compressFragmentWorkSpaceSize];
             var dstSize = 0;
 
-            ret = RtlDecompressBufferEx(CompressionFormatXpressHuff, outBuf, outBuf.Length, buffer, buffer.Length, ref dstSize, workSpace);
+            ret = RtlDecompressBufferEx(CompressionFormatXpressHuff, outBuf, outBuf.Length, buffer, buffer.Length,
+                ref dstSize, workSpace);
             if (ret == 0)
             {
                 return outBuf;
@@ -39,6 +44,5 @@ namespace Prefetch.XpressStream
 
             return null;
         }
-     
     }
 }

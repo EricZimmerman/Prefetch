@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Prefetch
 {
-   public class Version30:IPrefetch
+    public class Version30 : IPrefetch
     {
+        public Version30(byte[] rawBytes, string sourceFilename)
+        {
+            SourceFilename = sourceFilename;
+
+            RawBytes = rawBytes;
+
+            Header = new Header(rawBytes.Take(84).ToArray());
+        }
+
         public byte[] RawBytes { get; }
-        
+
         public string SourceFilename { get; }
-       public Header Header { get; }
-       
+        public Header Header { get; }
+
         public int FileMetricsOffset { get; }
         public int FileMetricsCount { get; }
         public int TraceChainsOffset { get; }
@@ -25,27 +33,15 @@ namespace Prefetch
         public List<DateTimeOffset> LastRunTimes { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
-       public string VolumeDeviceName { get; }
-       public DateTimeOffset VolumeCreatedOn { get; }
-       public string VolumeSerialNumber { get; }
-       public List<MFTInformation> FileReferences { get; }
-       public List<string> DirectoryNames { get; }
+        public string VolumeDeviceName { get; }
+        public DateTimeOffset VolumeCreatedOn { get; }
+        public string VolumeSerialNumber { get; }
+        public List<MFTInformation> FileReferences { get; }
+        public List<string> DirectoryNames { get; }
 
-       public void SavePrefetch(string file)
-       {
-        System.IO.File.WriteAllBytes(file,RawBytes);
-       }
-
-       public Version30(byte[] rawBytes,string sourceFilename)
-       {
-            SourceFilename = sourceFilename;
-
-            RawBytes = rawBytes;
-
-            Header = new Header(rawBytes.Take(84).ToArray());
-
-
-
+        public void SavePrefetch(string file)
+        {
+            File.WriteAllBytes(file, RawBytes);
         }
     }
 }

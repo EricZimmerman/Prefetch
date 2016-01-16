@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Prefetch.XpressStream;
 using ServiceStack;
 using ServiceStack.Text;
@@ -28,7 +26,7 @@ namespace Prefetch
 
         public static void SavePrefetch(string file, IPrefetch pf)
         {
-            System.IO.File.WriteAllBytes(file, pf.RawBytes);
+            File.WriteAllBytes(file, pf.RawBytes);
         }
 
         public static IPrefetch Open(string file)
@@ -36,19 +34,19 @@ namespace Prefetch
             IPrefetch pf = null;
 
             var rawBytes = File.ReadAllBytes(file);
-            
-            var tempSig = Encoding.ASCII.GetString(rawBytes,0,3);
-            
+
+            var tempSig = Encoding.ASCII.GetString(rawBytes, 0, 3);
+
             if (tempSig.Equals("MAM"))
             {
                 //windows 10, so we need to decompress
 
                 //Size of decompressed data is at offset 4
                 var size = BitConverter.ToUInt32(rawBytes, 4);
-                
+
                 //get our compressed bytes (skipping signature and uncompressed size)
                 var compressedBytes = rawBytes.Skip(8).ToArray();
-                var decom = Xpress2.Decompress(compressedBytes,size);
+                var decom = Xpress2.Decompress(compressedBytes, size);
 
                 //update rawBytes with decompressed bytes so the rest works
                 rawBytes = decom;
@@ -56,7 +54,7 @@ namespace Prefetch
 
             //at this point we have prefetch bytes we can process
 
-            var fileVer = (Version)BitConverter.ToInt32(rawBytes, 0);
+            var fileVer = (Version) BitConverter.ToInt32(rawBytes, 0);
 
             var sig = BitConverter.ToInt32(rawBytes, 4);
 
@@ -68,7 +66,7 @@ namespace Prefetch
             switch (fileVer)
             {
                 case Version.WinXpOrWin2K3:
-                    pf = new Version17(rawBytes,file);
+                    pf = new Version17(rawBytes, file);
                     break;
                 case Version.VistaOrWin7:
                     pf = new Version23(rawBytes, file);
@@ -77,12 +75,11 @@ namespace Prefetch
                     pf = new Version26(rawBytes, file);
                     break;
                 case Version.Win10:
-                    pf = new Version30(rawBytes,file);
+                    pf = new Version30(rawBytes, file);
                     break;
                 default:
                     throw new Exception($"Unknown version '{fileVer:X}'");
             }
-
 
 
             return pf;
