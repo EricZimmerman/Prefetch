@@ -26,6 +26,11 @@ namespace Prefetch
             }
         }
 
+        public static void SavePrefetch(string file, IPrefetch pf)
+        {
+            System.IO.File.WriteAllBytes(file, pf.RawBytes);
+        }
+
         public static IPrefetch Open(string file)
         {
             IPrefetch pf = null;
@@ -51,7 +56,7 @@ namespace Prefetch
 
             //at this point we have prefetch bytes we can process
 
-            var ver = BitConverter.ToInt32(rawBytes, 0);
+            var fileVer = (Version)BitConverter.ToInt32(rawBytes, 0);
 
             var sig = BitConverter.ToInt32(rawBytes, 4);
 
@@ -60,20 +65,22 @@ namespace Prefetch
                 throw new Exception("Invalid signature! Should be 'SCCA'");
             }
 
-            switch (ver)
+            switch (fileVer)
             {
-                case (int)Version.WinXpOrWin2K3:
+                case Version.WinXpOrWin2K3:
                     pf = new Version17(rawBytes,file);
                     break;
-                case (int)Version.VistaOrWin7:
+                case Version.VistaOrWin7:
+                    pf = new Version23(rawBytes, file);
                     break;
-                case (int)Version.Win8xOrWin2012x:
+                case Version.Win8xOrWin2012x:
+                    pf = new Version26(rawBytes, file);
                     break;
-                case (int)Version.Win10:
+                case Version.Win10:
                     pf = new Version30(rawBytes,file);
                     break;
                 default:
-                    throw new Exception($"Unknown version '{ver:X}'");
+                    throw new Exception($"Unknown version '{fileVer:X}'");
             }
 
 

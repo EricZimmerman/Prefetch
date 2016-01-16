@@ -60,6 +60,5 @@ DateTimeOffset VolumeCreatedOn { get; }
         List<MFTInformation> FileReferences { get; }
         List<string> DirectoryNames { get; }
 
-        void SavePrefetch(string file);
     }
 }

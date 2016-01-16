@@ -32,10 +32,6 @@ namespace Prefetch
         public List<MFTInformation> FileReferences { get; }
         public List<string> DirectoryNames { get; }
 
-        public void SavePrefetch(string file)
-        {
-            System.IO.File.WriteAllBytes(file, RawBytes);
-        }
 
         public Version17(byte[] rawBytes, string sourceFilename)
         {

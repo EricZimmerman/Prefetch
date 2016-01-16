@@ -17,7 +17,7 @@ namespace Prefetch.Test
         const string Win10Path = @"..\..\TestFiles\Win10";
         const string WinXpPath = @"..\..\TestFiles\XPPro";
         const string Win8xPath = @"..\..\TestFiles\Win8x";
-        const string Win2k3Path = @"..\..\TestFiles\Win10";        
+        const string Win2k3Path = @"..\..\TestFiles\Win2k3";        
         const string Win2012Path = @"..\..\TestFiles\Win2012";
         const string WinVistaPath = @"..\..\TestFiles\Vista";
         const string Win2012R2Path = @"..\..\TestFiles\Win2012R2";

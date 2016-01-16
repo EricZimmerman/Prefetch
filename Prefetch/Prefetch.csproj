@@ -52,6 +52,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TraceChain17.cs" />
     <Compile Include="Version17.cs" />
+    <Compile Include="Version23.cs" />
+    <Compile Include="Version26.cs" />
     <Compile Include="Version30.cs" />
     <Compile Include="XpressStream\Xpress2.cs" />
   </ItemGroup>
