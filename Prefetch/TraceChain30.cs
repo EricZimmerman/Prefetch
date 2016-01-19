@@ -5,7 +5,7 @@ namespace Prefetch
     public class TraceChain30
     {
         public TraceChain30(byte[] rawBytes)
-        {  
+        {
             TotalBlockLoadCount = BitConverter.ToInt32(rawBytes, 0);
             Unknown0 = rawBytes[4];
             Unknown1 = rawBytes[5];

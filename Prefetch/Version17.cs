@@ -117,8 +117,8 @@ namespace Prefetch
             tempIndex = 0;
             for (var i = 0; i < numDirectoryStrings; i++)
             {
-                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex) * 2 + 2;
-                    // double the count since its unicode and add 2 extra for null char
+                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex)*2 + 2;
+                // double the count since its unicode and add 2 extra for null char
                 tempIndex += 2;
                 var dirName = Encoding.Unicode.GetString(dirStringsBytes, tempIndex, dirCharCount).Trim('\0');
                 DirectoryNames.Add(dirName);

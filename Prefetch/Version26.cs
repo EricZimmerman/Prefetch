@@ -38,9 +38,9 @@ namespace Prefetch
 
             LastRunTimes = new List<DateTimeOffset>();
 
-            for (int i = 0; i < 7; i++)
+            for (var i = 0; i < 7; i++)
             {
-                var rawTime = BitConverter.ToInt64(runtimeBytes, i * 8);
+                var rawTime = BitConverter.ToInt64(runtimeBytes, i*8);
 
                 if (rawTime > 0)
                 {
@@ -59,7 +59,7 @@ namespace Prefetch
 
             //TODO do something with stuff below here. relevant stuff must be moved to interface
 
-            var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount * 32).ToArray();
+            var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
             var tempIndex = 0;
 
             //TODO must end up as a property
@@ -73,7 +73,7 @@ namespace Prefetch
 
             var traceChains = new List<TraceChain17>();
 
-            var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12 * TraceChainsCount).ToArray();
+            var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12*TraceChainsCount).ToArray();
             var traceIndex = 0;
             while (traceIndex < traceChainBytes.Length)
             {
@@ -84,7 +84,7 @@ namespace Prefetch
             var filenameStringsBytes = rawBytes.Skip(FilenameStringsOffset).Take(FilenameStringsSize).ToArray();
 
             var filenamesRaw = Encoding.Unicode.GetString(filenameStringsBytes);
-            var fileNames = filenamesRaw.Split(new[] { '\0' }, StringSplitOptions.RemoveEmptyEntries);
+            var fileNames = filenamesRaw.Split(new[] {'\0'}, StringSplitOptions.RemoveEmptyEntries);
 
             Filenames = new List<string>();
 
@@ -98,7 +98,7 @@ namespace Prefetch
 
             VolumeDeviceName =
                 Encoding.Unicode.GetString(
-                    rawBytes.Skip(VolumesInfoOffset + volumeDevicePathOffset).Take(volDevicePathNumChars * 2).ToArray());
+                    rawBytes.Skip(VolumesInfoOffset + volumeDevicePathOffset).Take(volDevicePathNumChars*2).ToArray());
 
             var ct = BitConverter.ToInt64(volumeInfoBytes, 8);
             VolumeCreatedOn = DateTimeOffset.FromFileTime(ct);
@@ -138,7 +138,7 @@ namespace Prefetch
             tempIndex = 0;
             for (var i = 0; i < numDirectoryStrings; i++)
             {
-                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex) * 2 + 2;
+                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex)*2 + 2;
                 // double the count since its unicode and add 2 extra for null char
                 tempIndex += 2;
                 var dirName = Encoding.Unicode.GetString(dirStringsBytes, tempIndex, dirCharCount).Trim('\0');
