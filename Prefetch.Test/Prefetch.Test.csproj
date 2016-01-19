@@ -54,6 +54,10 @@
   <ItemGroup>
     <Compile Include="TestPrefetchMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestVersion17.cs" />
+    <Compile Include="TestVersion23.cs" />
+    <Compile Include="TestVersion26.cs" />
+    <Compile Include="TestVersion30.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
