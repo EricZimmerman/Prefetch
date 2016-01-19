@@ -18,5 +18,10 @@ namespace Prefetch
         public byte Unknown0 { get; }
         public byte Unknown1 { get; }
         public short Unknown2 { get; }
+
+        public override string ToString()
+        {
+            return $"Next index: {NextArrayEntryIndex}, Total block load count: {TotalBlockLoadCount}";
+        }
     }
 }

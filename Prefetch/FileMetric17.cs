@@ -20,5 +20,10 @@ namespace Prefetch
         public int FilenameStringOffset { get; }
         public int FilenameStringSize { get; }
         public int Unknown2 { get; }
+
+        public override string ToString()
+        {
+            return $"Filename offset: {FilenameStringOffset}, Size: {FilenameStringSize}";
+        }
     }
 }

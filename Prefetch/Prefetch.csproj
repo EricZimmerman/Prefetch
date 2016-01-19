@@ -45,12 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileMetric17.cs" />
+    <Compile Include="FileMetric23.cs" />
     <Compile Include="MFTInformation.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Prefetch.cs" />
     <Compile Include="IPrefetch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TraceChain17.cs" />
+    <Compile Include="TraceChain30.cs" />
     <Compile Include="Version17.cs" />
     <Compile Include="Version23.cs" />
     <Compile Include="Version26.cs" />

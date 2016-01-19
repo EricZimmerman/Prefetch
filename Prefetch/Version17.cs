@@ -39,14 +39,6 @@ namespace Prefetch
 
             RunCount = BitConverter.ToInt32(fileInfoBytes, 60);
 
-
-            //need to jump around now to get bytes for
-            //FileMetrics
-            //TraceChains
-            //FilenameString
-            //VolumesInfo
-
-
             //TODO do something with stuff below here. relevant stuff must be moved to interface
 
             var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*20).ToArray();
@@ -60,15 +52,13 @@ namespace Prefetch
                 tempIndex += 20;
             }
 
-
             var traceChains = new List<TraceChain17>();
 
             var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12*TraceChainsCount).ToArray();
             var traceIndex = 0;
             while (traceIndex < traceChainBytes.Length)
             {
-                traceChains.Add(new TraceChain17(traceChainBytes.Skip(traceIndex).Take(20).ToArray()));
-
+                traceChains.Add(new TraceChain17(traceChainBytes.Skip(traceIndex).Take(12).ToArray()));
                 traceIndex += 12;
             }
 
@@ -106,14 +96,14 @@ namespace Prefetch
             var fileRefsIndex = VolumesInfoOffset + fileRefOffset;
             var fileRefBytes = rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
 
-            var fileRefVer = BitConverter.ToInt32(rawBytes, 0);
-            var numFileRefs = BitConverter.ToInt32(rawBytes, 4);
+            var fileRefVer = BitConverter.ToInt32(fileRefBytes, 0);
+            var numFileRefs = BitConverter.ToInt32(fileRefBytes, 4);
 
             tempIndex = 8;
 
             FileReferences = new List<MFTInformation>();
 
-            while (tempIndex < fileRefBytes.Length)
+            while (tempIndex < fileRefBytes.Length && FileReferences.Count < numFileRefs)
             {
                 FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
                 tempIndex += 8;
@@ -127,7 +117,7 @@ namespace Prefetch
             tempIndex = 0;
             for (var i = 0; i < numDirectoryStrings; i++)
             {
-                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex)*2 + 2;
+                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex) * 2 + 2;
                     // double the count since its unicode and add 2 extra for null char
                 tempIndex += 2;
                 var dirName = Encoding.Unicode.GetString(dirStringsBytes, tempIndex, dirCharCount).Trim('\0');

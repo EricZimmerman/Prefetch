@@ -63,5 +63,10 @@ namespace Prefetch
         public int? MFTSequenceNumber { get; set; }
 
         public string Note { get; set; }
+
+        public override string ToString()
+        {
+            return $"Entry: {MFTEntryNumber}, Seq: {MFTSequenceNumber}, Note: {Note}";
+        }
     }
 }

@@ -53,5 +53,11 @@ namespace Prefetch
         public string ExecutableFilename { get; }
 
         public string Hash { get; }
+
+        public override string ToString()
+        {
+            return
+                $"Version: {Version}, Sig: {Signature}, File size: {FileSize}, Executable name: {ExecutableFilename}, Hash: {Hash}";
+        }
     }
 }
