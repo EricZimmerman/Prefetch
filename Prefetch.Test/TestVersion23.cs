@@ -9,30 +9,6 @@ namespace Prefetch.Test
     public class TestVersion23
     {
         [Test]
-        public void Windows7ShouldHaveVersionNumber23()
-        {
-            foreach (var file in Directory.GetFiles(TestPrefetchMain.Win7Path, "*.pf"))
-            {
-                var pf = Prefetch.Open(file);
-
-                pf.SourceFilename.Should().Be(file);
-                pf.Header.Version.Should().Be(Version.VistaOrWin7);
-            }
-        }
-
-        [Test]
-        public void WindowsVistaShouldHaveVersionNumber23()
-        {
-            foreach (var file in Directory.GetFiles(TestPrefetchMain.WinVistaPath, "*.pf"))
-            {
-                var pf = Prefetch.Open(file);
-
-                pf.SourceFilename.Should().Be(file);
-                pf.Header.Version.Should().Be(Version.VistaOrWin7);
-            }
-        }
-
-        [Test]
         public void TestVistaExplorerPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.WinVistaPath, @"EXPLORER.EXE-7A3328DA.pf");
@@ -57,7 +33,7 @@ namespace Prefetch.Test
             pf.Filenames.Count.Should().Be(66);
             pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\ADVAPI32.DLL");
 
-            pf.FileReferences[1].MFTEntryNumber.Should().Be((ulong)352);
+            pf.FileReferences[1].MFTEntryNumber.Should().Be((ulong) 352);
             pf.FileReferences[1].MFTSequenceNumber.Should().Be(null);
         }
 
@@ -88,8 +64,32 @@ namespace Prefetch.Test
             pf.Filenames.Count.Should().Be(37);
             pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\KERNELBASE.DLL");
 
-            pf.FileReferences[2].MFTEntryNumber.Should().Be((ulong)25654);
+            pf.FileReferences[2].MFTEntryNumber.Should().Be((ulong) 25654);
             pf.FileReferences[2].MFTSequenceNumber.Should().Be(1);
+        }
+
+        [Test]
+        public void Windows7ShouldHaveVersionNumber23()
+        {
+            foreach (var file in Directory.GetFiles(TestPrefetchMain.Win7Path, "*.pf"))
+            {
+                var pf = Prefetch.Open(file);
+
+                pf.SourceFilename.Should().Be(file);
+                pf.Header.Version.Should().Be(Version.VistaOrWin7);
+            }
+        }
+
+        [Test]
+        public void WindowsVistaShouldHaveVersionNumber23()
+        {
+            foreach (var file in Directory.GetFiles(TestPrefetchMain.WinVistaPath, "*.pf"))
+            {
+                var pf = Prefetch.Open(file);
+
+                pf.SourceFilename.Should().Be(file);
+                pf.Header.Version.Should().Be(Version.VistaOrWin7);
+            }
         }
     }
 }
