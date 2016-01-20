@@ -58,9 +58,11 @@ namespace Prefetch.Test
 
             pf.FileReferences.Count.Should().Be(36);
 
+            pf.Filenames.Count.Should().Be(30);
+            pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\LOCALE.NLS");
+
             pf.FileReferences[34].MFTEntryNumber.Should().Be((ulong)126);
             pf.FileReferences[34].MFTSequenceNumber.Should().Be(1);
-
         }
 
         [Test]
@@ -68,7 +70,6 @@ namespace Prefetch.Test
         {
             var file = Path.Combine(TestPrefetchMain.Win2k3Path, @"CMD.EXE-087B4001.pf");
             var pf = Prefetch.Open(file);
-
 
             pf.Header.ExecutableFilename.Should().Be("CMD.EXE");
             pf.Header.Hash.Should().Be("87B4001");
@@ -86,9 +87,11 @@ namespace Prefetch.Test
 
             pf.FileReferences.Count.Should().Be(20);
 
+            pf.Filenames.Count.Should().Be(16);
+            pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\LOCALE.NLS");
+
             pf.FileReferences[5].MFTEntryNumber.Should().Be((ulong)250);
             pf.FileReferences[5].MFTSequenceNumber.Should().Be(1);
-
         }
     }
 }

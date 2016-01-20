@@ -41,6 +41,9 @@ namespace Prefetch.Test
 
             pf.FileReferences.Count.Should().Be(284);
 
+            pf.Filenames.Count.Should().Be(282);
+            pf.Filenames[3].Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\WINDOWS\SYSTEM32\KERNEL32.DLL");
+
             pf.FileReferences[5].MFTEntryNumber.Should().Be((ulong)55125);
             pf.FileReferences[5].MFTSequenceNumber.Should().Be(1);
 
