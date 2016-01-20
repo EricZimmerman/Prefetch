@@ -16,7 +16,6 @@ namespace Prefetch.Test
                 var pf = Prefetch.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
-
                 pf.Header.Version.Should().Be(Version.WinXpOrWin2K3);
             }
         }
@@ -29,7 +28,6 @@ namespace Prefetch.Test
                 var pf = Prefetch.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
-
                 pf.Header.Version.Should().Be(Version.WinXpOrWin2K3);
             }
         }

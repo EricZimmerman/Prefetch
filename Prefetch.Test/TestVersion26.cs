@@ -16,7 +16,6 @@ namespace Prefetch.Test
                 var pf = Prefetch.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
-
                 pf.Header.Version.Should().Be(Version.Win8xOrWin2012x);
             }
 
@@ -25,7 +24,6 @@ namespace Prefetch.Test
                 var pf = Prefetch.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
-
                 pf.Header.Version.Should().Be(Version.Win8xOrWin2012x);
             }
         }
@@ -73,6 +71,35 @@ namespace Prefetch.Test
             pf.FileReferences[9].MFTEntryNumber.Should().Be((ulong)46917);
             pf.FileReferences[9].MFTSequenceNumber.Should().Be(1);
 
+        }
+
+        [Test]
+        public void TestWin8CmdPfProperties()
+        {
+            var file = Path.Combine(TestPrefetchMain.Win8xPath, @"_CMD.EXE-4A81B364.pf");
+            var pf = Prefetch.Open(file);
+            
+            pf.Header.ExecutableFilename.Should().Be("CMD.EXE");
+            pf.Header.Hash.Should().Be("4A81B364");
+            pf.Header.FileSize.Should().Be(8590);
+            pf.LastRunTimes[0].Should().Be(DateTimeOffset.Parse("2016-01-16T14: 25:41.5341178-07:00"));
+            pf.RunCount.Should().Be(2);
+
+            pf.VolumeCount.Should().Be(1);
+            pf.VolumeDeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME2");
+            pf.VolumeSerialNumber.Should().Be("A26E529A");
+            pf.VolumeCreatedOn.Should().Be(DateTimeOffset.Parse("2016-01-16T15:15:38.2977678-07:00"));
+
+            pf.DirectoryNames.Count.Should().Be(8);
+            pf.DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\BRANDING\BASEBRD\EN-US");
+
+            pf.FileReferences.Count.Should().Be(20);
+
+            pf.Filenames.Count.Should().Be(12);
+            pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\KERNELBASE.DLL");
+
+            pf.FileReferences[1].MFTEntryNumber.Should().Be((ulong)44760);
+            pf.FileReferences[1].MFTSequenceNumber.Should().Be(null);
         }
 
         [Test]

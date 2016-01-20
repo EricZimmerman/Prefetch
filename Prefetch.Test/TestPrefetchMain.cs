@@ -50,6 +50,8 @@ namespace Prefetch.Test
                 {
                     var pf = Prefetch.Open(file);
 
+                    pf.Should().NotBe(null);
+
                     pf.Header.Signature.Should().Be("SCCA");
                 }
             }
