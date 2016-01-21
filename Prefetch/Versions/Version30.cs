@@ -93,6 +93,8 @@ namespace Prefetch
 
             VolumeInformation = new List<VolumeInfo>();
 
+            //TODO factor this out as they are all the same?
+            //TODO better yet, add in all the unique stuff so it can be researched
             for (var j = 0; j < VolumeCount; j++)
             {
                 var skipSize = j*96;
