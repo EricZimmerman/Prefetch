@@ -59,7 +59,7 @@ namespace Prefetch
             //at offset 136 there is 88 bytes of unknown, empty values
             var unknown2 = BitConverter.ToInt32(fileInfoBytes, 128);
 
-            
+
             var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
             var tempIndex = 0;
 
@@ -71,13 +71,13 @@ namespace Prefetch
                 tempIndex += 32;
             }
 
-            var traceChains = new List<TraceChain17>();
+            TraceChains = new List<TraceChain>();
 
             var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12*TraceChainsCount).ToArray();
             var traceIndex = 0;
             while (traceIndex < traceChainBytes.Length)
             {
-                traceChains.Add(new TraceChain17(traceChainBytes.Skip(traceIndex).Take(12).ToArray()));
+                TraceChains.Add(new TraceChain(traceChainBytes.Skip(traceIndex).Take(12).ToArray(), false));
                 traceIndex += 12;
             }
 
@@ -170,5 +170,6 @@ namespace Prefetch
         public int RunCount { get; }
         public List<string> Filenames { get; }
         public List<FileMetric> FileMetrics { get; }
+        public List<TraceChain> TraceChains { get; }
     }
 }

@@ -57,17 +57,17 @@ namespace Prefetch
 
             while (tempIndex < fileMetricsBytes.Length)
             {
-                FileMetrics.Add(new FileMetric(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray(),false));
+                FileMetrics.Add(new FileMetric(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray(), false));
                 tempIndex += 32;
             }
 
-            var traceChains = new List<TraceChain17>();
+            TraceChains = new List<TraceChain>();
 
             var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(12*TraceChainsCount).ToArray();
             var traceIndex = 0;
             while (traceIndex < traceChainBytes.Length)
             {
-                traceChains.Add(new TraceChain17(traceChainBytes.Skip(traceIndex).Take(12).ToArray()));
+                TraceChains.Add(new TraceChain(traceChainBytes.Skip(traceIndex).Take(12).ToArray(), false));
                 traceIndex += 12;
             }
 
@@ -160,5 +160,6 @@ namespace Prefetch
         public int RunCount { get; }
         public List<string> Filenames { get; }
         public List<FileMetric> FileMetrics { get; }
+        public List<TraceChain> TraceChains { get; }
     }
 }

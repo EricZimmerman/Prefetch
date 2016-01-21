@@ -49,6 +49,8 @@ namespace Prefetch
 
         List<string> Filenames { get; }
 
-         List<FileMetric> FileMetrics { get; }
+        List<FileMetric> FileMetrics { get; }
+
+        List<TraceChain> TraceChains { get; }
     }
 }

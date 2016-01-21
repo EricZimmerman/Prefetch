@@ -51,7 +51,7 @@
     <Compile Include="Prefetch.cs" />
     <Compile Include="IPrefetch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TraceChain\TraceChain17.cs" />
+    <Compile Include="TraceChain\TraceChain.cs" />
     <Compile Include="TraceChain\TraceChain30.cs" />
     <Compile Include="Versions\Version17.cs" />
     <Compile Include="Versions\Version23.cs" />

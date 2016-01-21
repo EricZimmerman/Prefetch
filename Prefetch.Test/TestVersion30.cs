@@ -47,7 +47,7 @@ namespace Prefetch.Test
             var file = Path.Combine(TestPrefetchMain.Win10Path, @"DCODEDCODEDCODEDCODEDCODEDCOD-E65B9FE8.pf");
             var pf = Prefetch.Open(file);
 
-            Prefetch.DumpToJson(pf, true, @"D:\temp\DCODEDCODEDCODEDCODEDCODEDCOD.json");
+            //Prefetch.DumpToJson(pf, true, @"D:\temp\DCODEDCODEDCODEDCODEDCODEDCOD.json");
 
             pf.Header.ExecutableFilename.Should().Be("DCODEDCODEDCODEDCODEDCODEDCOD");
             pf.Header.Hash.Should().Be("E65B9FE8");
@@ -91,7 +91,7 @@ namespace Prefetch.Test
             var file = Path.Combine(TestPrefetchMain.Win10Path, @"DEVENV.EXE-854D7862.pf");
             var pf = Prefetch.Open(file);
 
-            Prefetch.DumpToJson(pf, true, @"D:\temp\DEVENV.json");
+            //Prefetch.DumpToJson(pf, true, @"D:\temp\DEVENV.json");
 
             pf.Header.ExecutableFilename.Should().Be("DEVENV.EXE");
             pf.Header.Hash.Should().Be("854D7862");

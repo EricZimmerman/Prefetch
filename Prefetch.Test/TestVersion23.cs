@@ -43,7 +43,7 @@ namespace Prefetch.Test
             var file = Path.Combine(TestPrefetchMain.Win7Path, @"CALC.EXE-77FDF17F.pf");
             var pf = Prefetch.Open(file);
 
-            //Prefetch.DumpToJson(pf,true,@"D:\temp\out.json");
+            Prefetch.DumpToJson(pf, true, @"D:\temp\win7calc.json");
 
             pf.Header.ExecutableFilename.Should().Be("CALC.EXE");
             pf.Header.Hash.Should().Be("77FDF17F");
