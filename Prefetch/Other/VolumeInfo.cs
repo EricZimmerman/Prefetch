@@ -5,17 +5,6 @@ namespace Prefetch.Other
 {
     public class VolumeInfo
     {
-        public int DeviceOffset { get; }
-        public DateTimeOffset CreationTime { get; }
-        public string SerialNumber { get; }
-        public string DeviceName { get; }
-
-        
-        public List<MFTInformation> FileReferences { get; }
-
-        public List<string> DirectoryNames { get; }
-
-
         public VolumeInfo(int offset, DateTimeOffset createdOn, string serialNum, string deviceName)
         {
             DeviceOffset = offset;
@@ -27,5 +16,14 @@ namespace Prefetch.Other
             DirectoryNames = new List<string>();
         }
 
+        public int DeviceOffset { get; }
+        public DateTimeOffset CreationTime { get; }
+        public string SerialNumber { get; }
+        public string DeviceName { get; }
+
+
+        public List<MFTInformation> FileReferences { get; }
+
+        public List<string> DirectoryNames { get; }
     }
 }

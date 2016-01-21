@@ -87,6 +87,8 @@ namespace Prefetch.Test
             {
                 var pf = Prefetch.Open(file);
 
+                pf.TotalDirectoryCount.Should().Be(-1);
+
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.WinXpOrWin2K3);
             }

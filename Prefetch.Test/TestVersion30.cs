@@ -42,41 +42,6 @@ namespace Prefetch.Test
         }
 
         [Test]
-        public void TestWin10DevEnvPfProperties()
-        {
-            var file = Path.Combine(TestPrefetchMain.Win10Path, @"DEVENV.EXE-854D7862.pf");
-            var pf = Prefetch.Open(file);
-
-           Prefetch.DumpToJson(pf, true, @"D:\temp\DEVENV.json");
-
-            pf.Header.ExecutableFilename.Should().Be("DEVENV.EXE");
-            pf.Header.Hash.Should().Be("854D7862");
-            pf.Header.FileSize.Should().Be(380690);
-            pf.LastRunTimes[0].Should().Be(DateTimeOffset.Parse("2016-01-13T09: 50:34.6578416-07:00,"));
-            pf.RunCount.Should().Be(54);
-
-            pf.VolumeCount.Should().Be(1);
-            pf.VolumeInformation[0].DeviceName.Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}");
-            pf.VolumeInformation[0].SerialNumber.Should().Be("8C9F49EC");
-            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2015-11-17T13:57:46.2434681-07:00"));
-
-            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(516);
-            pf.VolumeInformation[0].DirectoryNames[3].Should()
-                .Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\PROGRAM FILES (X86)\COMMON FILES\MICROSOFT SHARED\MSENV");
-
-            pf.VolumeInformation[0].FileReferences.Count.Should().Be(681);
-
-            pf.Filenames.Count.Should().Be(403);
-            pf.Filenames[3].Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\MICROSOFT.VISUALSTUDIO.ACTIVITIES.DLL");
-
-            pf.VolumeInformation[0].FileReferences[6].MFTEntryNumber.Should().Be((ulong)148922);
-            pf.VolumeInformation[0].FileReferences[6].MFTSequenceNumber.Should().Be(1);
-
-            pf.VolumeInformation[0].FileReferences[8].MFTEntryNumber.Should().Be((ulong)219686);
-            pf.VolumeInformation[0].FileReferences[8].MFTSequenceNumber.Should().Be(2);
-        }
-
-        [Test]
         public void TestWin10DcodeDecodePfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win10Path, @"DCODEDCODEDCODEDCODEDCODEDCOD-E65B9FE8.pf");
@@ -109,16 +74,52 @@ namespace Prefetch.Test
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(2);
             pf.VolumeInformation[1].FileReferences.Count.Should().Be(85);
 
-            
 
             pf.Filenames.Count.Should().Be(57);
             pf.Filenames[3].Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\WINDOWS\SYSTEM32\KERNEL32.DLL");
 
-            pf.VolumeInformation[1].FileReferences[12].MFTEntryNumber.Should().Be((ulong)357876);
+            pf.VolumeInformation[1].FileReferences[12].MFTEntryNumber.Should().Be((ulong) 357876);
             pf.VolumeInformation[1].FileReferences[12].MFTSequenceNumber.Should().Be(1);
 
-            pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong)305846);
+            pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 305846);
             pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(2);
+        }
+
+        [Test]
+        public void TestWin10DevEnvPfProperties()
+        {
+            var file = Path.Combine(TestPrefetchMain.Win10Path, @"DEVENV.EXE-854D7862.pf");
+            var pf = Prefetch.Open(file);
+
+            Prefetch.DumpToJson(pf, true, @"D:\temp\DEVENV.json");
+
+            pf.Header.ExecutableFilename.Should().Be("DEVENV.EXE");
+            pf.Header.Hash.Should().Be("854D7862");
+            pf.Header.FileSize.Should().Be(380690);
+            pf.LastRunTimes[0].Should().Be(DateTimeOffset.Parse("2016-01-13T09: 50:34.6578416-07:00,"));
+            pf.RunCount.Should().Be(54);
+
+            pf.VolumeCount.Should().Be(1);
+            pf.VolumeInformation[0].DeviceName.Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}");
+            pf.VolumeInformation[0].SerialNumber.Should().Be("8C9F49EC");
+            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2015-11-17T13:57:46.2434681-07:00"));
+
+            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(516);
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\PROGRAM FILES (X86)\COMMON FILES\MICROSOFT SHARED\MSENV");
+
+            pf.VolumeInformation[0].FileReferences.Count.Should().Be(681);
+
+            pf.Filenames.Count.Should().Be(403);
+            pf.Filenames[3].Should()
+                .Be(
+                    @"\VOLUME{01d1217a9c4c6779-8c9f49ec}\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\MICROSOFT.VISUALSTUDIO.ACTIVITIES.DLL");
+
+            pf.VolumeInformation[0].FileReferences[6].MFTEntryNumber.Should().Be((ulong) 148922);
+            pf.VolumeInformation[0].FileReferences[6].MFTSequenceNumber.Should().Be(1);
+
+            pf.VolumeInformation[0].FileReferences[8].MFTEntryNumber.Should().Be((ulong) 219686);
+            pf.VolumeInformation[0].FileReferences[8].MFTSequenceNumber.Should().Be(2);
         }
 
         [Test]
@@ -127,6 +128,16 @@ namespace Prefetch.Test
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win10Path, "*.pf"))
             {
                 var pf = Prefetch.Open(file);
+
+                var totalDirs = 0;
+                foreach (var volumeInfo in pf.VolumeInformation)
+                {
+                    totalDirs += volumeInfo.DirectoryNames.Count;
+                }
+
+                pf.TotalDirectoryCount.Should().Be(totalDirs);
+
+
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.Win10);
             }

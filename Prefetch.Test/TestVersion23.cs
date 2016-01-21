@@ -57,7 +57,8 @@ namespace Prefetch.Test
             pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T14:15:18.1093750-07:00"));
 
             pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(8);
-            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
 
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(45);
 
@@ -86,6 +87,14 @@ namespace Prefetch.Test
             foreach (var file in Directory.GetFiles(TestPrefetchMain.WinVistaPath, "*.pf"))
             {
                 var pf = Prefetch.Open(file);
+
+                var totalDirs = 0;
+                foreach (var volumeInfo in pf.VolumeInformation)
+                {
+                    totalDirs += volumeInfo.DirectoryNames.Count;
+                }
+
+                pf.TotalDirectoryCount.Should().Be(totalDirs);
 
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.VistaOrWin7);

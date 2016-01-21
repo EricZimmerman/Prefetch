@@ -34,6 +34,7 @@ namespace Prefetch
             VolumesInfoSize = BitConverter.ToInt32(fileInfoBytes, 32);
 
             //at offset 36 there are 8 unknown values, seemingly empty
+            TotalDirectoryCount = BitConverter.ToInt32(fileInfoBytes, 36);
 
             var runtimeBytes = fileInfoBytes.Skip(44).Take(64).ToArray();
 
@@ -95,7 +96,7 @@ namespace Prefetch
 
             VolumeInformation = new List<VolumeInfo>();
 
-            for (int j = 0; j < VolumeCount; j++)
+            for (var j = 0; j < VolumeCount; j++)
             {
                 var skipSize = j*96;
                 var volBytes = volumeInfoBytes.Skip(skipSize).Take(96).ToArray();
@@ -106,11 +107,11 @@ namespace Prefetch
                 var ct = BitConverter.ToInt64(volBytes, 8);
 
                 var devName = Encoding.Unicode.GetString(
-                                    rawBytes.Skip(VolumesInfoOffset + volDevOffset).Take(volDevNumChar * 2).ToArray());
+                    rawBytes.Skip(VolumesInfoOffset + volDevOffset).Take(volDevNumChar*2).ToArray());
 
                 var sn = BitConverter.ToInt32(volBytes, 16).ToString("X");
 
-                VolumeInformation.Add(new VolumeInfo(volDevOffset,DateTimeOffset.FromFileTime(ct),sn,devName));
+                VolumeInformation.Add(new VolumeInfo(volDevOffset, DateTimeOffset.FromFileTime(ct), sn, devName));
 
                 var fileRefOffset = BitConverter.ToInt32(volBytes, 20);
                 var fileRefSize = BitConverter.ToInt32(volBytes, 24);
@@ -130,7 +131,8 @@ namespace Prefetch
 
                 while (tempIndex < fileRefBytes.Length && VolumeInformation.Last().FileReferences.Count < numFileRefs)
                 {
-                        VolumeInformation.Last().FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
+                    VolumeInformation.Last()
+                        .FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
                     tempIndex += 8;
                 }
 
@@ -144,7 +146,7 @@ namespace Prefetch
                     // double the count since its Unicode and add 2 extra for null char
                     tempIndex += 2;
                     var dirName = Encoding.Unicode.GetString(dirStringsBytes, tempIndex, dirCharCount).Trim('\0');
-                        VolumeInformation.Last().DirectoryNames.Add(dirName);
+                    VolumeInformation.Last().DirectoryNames.Add(dirName);
 
                     tempIndex += dirCharCount;
                 }
@@ -165,11 +167,10 @@ namespace Prefetch
         public int VolumesInfoOffset { get; }
         public int VolumeCount { get; }
         public int VolumesInfoSize { get; }
+        public int TotalDirectoryCount { get; }
         public List<DateTimeOffset> LastRunTimes { get; }
         public List<VolumeInfo> VolumeInformation { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
-        
-
     }
 }

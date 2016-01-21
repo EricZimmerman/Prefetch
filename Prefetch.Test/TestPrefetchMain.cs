@@ -52,6 +52,8 @@ namespace Prefetch.Test
 
                     pf.Should().NotBe(null);
 
+                    pf.Filenames.Count.Should().Be(pf.FileMetricsCount);
+
                     pf.VolumeCount.Should().Be(pf.VolumeInformation.Count);
 
                     pf.Header.Signature.Should().Be("SCCA");

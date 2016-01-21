@@ -37,6 +37,8 @@ namespace Prefetch
 
         int VolumesInfoSize { get; }
 
+        int TotalDirectoryCount { get; }
+
         List<DateTimeOffset> LastRunTimes { get; }
         List<VolumeInfo> VolumeInformation { get; }
 
@@ -47,16 +49,13 @@ namespace Prefetch
 
         List<string> Filenames { get; }
 
-        //VolumesInfo list
+        //   string SerialNumber { get; }
+
+        //    DateTimeOffset VolumeCreatedOn { get; }
+
+        //    string DeviceName { get; }
         //TODO refactor into VolumesInfoClass to hold these things
 
-    //    string DeviceName { get; }
-
-    //    DateTimeOffset VolumeCreatedOn { get; }
-
-     //   string SerialNumber { get; }
-
-       
- 
+        //VolumesInfo list
     }
 }

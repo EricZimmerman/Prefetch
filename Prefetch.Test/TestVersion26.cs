@@ -28,7 +28,8 @@ namespace Prefetch.Test
             pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T15:21:57.7889266-07:00"));
 
             pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(7);
-            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
 
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(35);
 
@@ -61,7 +62,8 @@ namespace Prefetch.Test
             pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T15:20:46.1666157-07:00"));
 
             pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(12);
-            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\USERS\ADMINISTRATOR\APPDATA\LOCAL");
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME2\USERS\ADMINISTRATOR\APPDATA\LOCAL");
 
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(62);
 
@@ -93,7 +95,8 @@ namespace Prefetch.Test
             pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T15:04:54.3519546-07:00"));
 
             pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(7);
-            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
 
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(46);
 
@@ -125,7 +128,8 @@ namespace Prefetch.Test
             pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T15:15:38.2977678-07:00"));
 
             pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(8);
-            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\BRANDING\BASEBRD\EN-US");
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\BRANDING\BASEBRD\EN-US");
 
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(20);
 
@@ -162,6 +166,14 @@ namespace Prefetch.Test
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win8xPath, "*.pf"))
             {
                 var pf = Prefetch.Open(file);
+
+                var totalDirs = 0;
+                foreach (var volumeInfo in pf.VolumeInformation)
+                {
+                    totalDirs += volumeInfo.DirectoryNames.Count;
+                }
+
+                pf.TotalDirectoryCount.Should().Be(totalDirs);
 
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.Win8xOrWin2012x);
