@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileMetric\FileMetric17.cs" />
-    <Compile Include="FileMetric\FileMetric23.cs" />
+    <Compile Include="FileMetric\FileMetric.cs" />
     <Compile Include="Other\MFTInformation.cs" />
     <Compile Include="Other\Header.cs" />
     <Compile Include="Prefetch.cs" />

@@ -49,13 +49,6 @@ namespace Prefetch
 
         List<string> Filenames { get; }
 
-        //   string SerialNumber { get; }
-
-        //    DateTimeOffset VolumeCreatedOn { get; }
-
-        //    string DeviceName { get; }
-        //TODO refactor into VolumesInfoClass to hold these things
-
-        //VolumesInfo list
+         List<FileMetric> FileMetrics { get; }
     }
 }

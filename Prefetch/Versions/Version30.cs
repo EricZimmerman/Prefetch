@@ -59,17 +59,14 @@ namespace Prefetch
             //at offset 136 there is 88 bytes of unknown, empty values
             var unknown2 = BitConverter.ToInt32(fileInfoBytes, 128);
 
-            //TODO do something with stuff below here. relevant stuff must be moved to interface
-
             var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
             var tempIndex = 0;
 
-            //TODO must end up as a property
-            var fileMetrics = new List<FileMetric23>();
+            FileMetrics = new List<FileMetric>();
 
             while (tempIndex < fileMetricsBytes.Length)
             {
-                fileMetrics.Add(new FileMetric23(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray()));
+                FileMetrics.Add(new FileMetric(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray(), false));
                 tempIndex += 32;
             }
 
@@ -172,5 +169,6 @@ namespace Prefetch
         public List<VolumeInfo> VolumeInformation { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
+        public List<FileMetric> FileMetrics { get; }
     }
 }

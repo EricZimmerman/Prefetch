@@ -53,11 +53,11 @@ namespace Prefetch
             var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
             var tempIndex = 0;
 
-            var fileMetrics = new List<FileMetric23>();
+            FileMetrics = new List<FileMetric>();
 
             while (tempIndex < fileMetricsBytes.Length)
             {
-                fileMetrics.Add(new FileMetric23(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray()));
+                FileMetrics.Add(new FileMetric(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray(),false));
                 tempIndex += 32;
             }
 
@@ -159,5 +159,6 @@ namespace Prefetch
         public List<VolumeInfo> VolumeInformation { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
+        public List<FileMetric> FileMetrics { get; }
     }
 }
