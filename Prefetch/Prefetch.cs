@@ -81,7 +81,6 @@ namespace Prefetch
                     throw new Exception($"Unknown version '{fileVer:X}'");
             }
 
-
             return pf;
         }
     }

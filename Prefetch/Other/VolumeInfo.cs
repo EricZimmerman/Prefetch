@@ -20,8 +20,7 @@ namespace Prefetch.Other
         public DateTimeOffset CreationTime { get; }
         public string SerialNumber { get; }
         public string DeviceName { get; }
-
-
+        
         public List<MFTInformation> FileReferences { get; }
 
         public List<string> DirectoryNames { get; }

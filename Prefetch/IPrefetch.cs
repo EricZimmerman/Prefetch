@@ -44,9 +44,6 @@ namespace Prefetch
 
         int RunCount { get; }
 
-        //FileMetricsArray list
-        //TraceChainsArray list
-
         List<string> Filenames { get; }
 
         List<FileMetric> FileMetrics { get; }
