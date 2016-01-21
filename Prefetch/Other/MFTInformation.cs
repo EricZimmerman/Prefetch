@@ -6,7 +6,6 @@ namespace Prefetch
     {
         public MFTInformation()
         {
-            Note = string.Empty;
         }
 
         public MFTInformation(byte[] rawMFTInfo)
@@ -41,32 +40,17 @@ namespace Prefetch
                 MFTSequenceNumber = null;
             }
 
-
-            if (entryIndex > 0 && sequenceNumber > 0)
-            {
-                Note = "NTFS";
-            }
-
-            if (entryIndex > 0 && sequenceNumber == 0)
-            {
-                Note = "FAT";
-            }
-
-            if (entryIndex == 0 && sequenceNumber == 0)
-            {
-                Note = "Network/special item";
-            }
+            
         }
 
         public ulong? MFTEntryNumber { get; set; }
 
         public int? MFTSequenceNumber { get; set; }
 
-        public string Note { get; set; }
 
         public override string ToString()
         {
-            return $"Entry: {MFTEntryNumber}, Seq: {MFTSequenceNumber}, Note: {Note}";
+            return $"Entry: {MFTEntryNumber}, Seq: {MFTSequenceNumber}";
         }
     }
 }

@@ -44,15 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileMetric\FileMetric17.cs" />
-    <Compile Include="FileMetric\FileMetric.cs" />
+    <Compile Include="Other\FileMetric.cs" />
     <Compile Include="Other\MFTInformation.cs" />
     <Compile Include="Other\Header.cs" />
     <Compile Include="Prefetch.cs" />
     <Compile Include="IPrefetch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TraceChain\TraceChain.cs" />
-    <Compile Include="TraceChain\TraceChain30.cs" />
+    <Compile Include="Other\TraceChain.cs" />
     <Compile Include="Versions\Version17.cs" />
     <Compile Include="Versions\Version23.cs" />
     <Compile Include="Versions\Version26.cs" />
