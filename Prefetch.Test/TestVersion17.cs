@@ -21,20 +21,20 @@ namespace Prefetch.Test
             pf.RunCount.Should().Be(3);
 
             pf.VolumeCount.Should().Be(1);
-            pf.VolumeDeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME1");
-            pf.VolumeSerialNumber.Should().Be("64BB3469");
-            pf.VolumeCreatedOn.Should().Be(DateTimeOffset.Parse("2016-01-15T08:45:15.8906250-07:00"));
+            pf.VolumeInformation[0].DeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME1");
+            pf.VolumeInformation[0].SerialNumber.Should().Be("64BB3469");
+            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-15T08:45:15.8906250-07:00"));
 
-            pf.DirectoryNames.Count.Should().Be(4);
-            pf.DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\");
+            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(4);
+            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\");
 
-            pf.FileReferences.Count.Should().Be(20);
+            pf.VolumeInformation[0].FileReferences.Count.Should().Be(20);
 
             pf.Filenames.Count.Should().Be(16);
             pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\LOCALE.NLS");
 
-            pf.FileReferences[5].MFTEntryNumber.Should().Be((ulong) 250);
-            pf.FileReferences[5].MFTSequenceNumber.Should().Be(1);
+            pf.VolumeInformation[0].FileReferences[5].MFTEntryNumber.Should().Be((ulong) 250);
+            pf.VolumeInformation[0].FileReferences[5].MFTSequenceNumber.Should().Be(1);
         }
 
         [Test]
@@ -52,20 +52,20 @@ namespace Prefetch.Test
             pf.RunCount.Should().Be(3);
 
             pf.VolumeCount.Should().Be(1);
-            pf.VolumeDeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME1");
-            pf.VolumeSerialNumber.Should().Be("E0F7E847");
-            pf.VolumeCreatedOn.Should().Be(DateTimeOffset.Parse("2016-01-13T04:17:18.7187500-07:00"));
+            pf.VolumeInformation[0].DeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME1");
+            pf.VolumeInformation[0].SerialNumber.Should().Be("E0F7E847");
+            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-13T04:17:18.7187500-07:00"));
 
-            pf.DirectoryNames.Count.Should().Be(6);
-            pf.DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\");
+            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(6);
+            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\");
 
-            pf.FileReferences.Count.Should().Be(36);
+            pf.VolumeInformation[0].FileReferences.Count.Should().Be(36);
 
             pf.Filenames.Count.Should().Be(30);
             pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\LOCALE.NLS");
 
-            pf.FileReferences[34].MFTEntryNumber.Should().Be((ulong) 126);
-            pf.FileReferences[34].MFTSequenceNumber.Should().Be(1);
+            pf.VolumeInformation[0].FileReferences[34].MFTEntryNumber.Should().Be((ulong) 126);
+            pf.VolumeInformation[0].FileReferences[34].MFTSequenceNumber.Should().Be(1);
         }
 
         [Test]

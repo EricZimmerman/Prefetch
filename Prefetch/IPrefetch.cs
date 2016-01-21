@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Prefetch.Other;
 
 namespace Prefetch
 {
@@ -37,6 +38,7 @@ namespace Prefetch
         int VolumesInfoSize { get; }
 
         List<DateTimeOffset> LastRunTimes { get; }
+        List<VolumeInfo> VolumeInformation { get; }
 
         int RunCount { get; }
 
@@ -48,13 +50,13 @@ namespace Prefetch
         //VolumesInfo list
         //TODO refactor into VolumesInfoClass to hold these things
 
-        string VolumeDeviceName { get; }
+    //    string DeviceName { get; }
 
-        DateTimeOffset VolumeCreatedOn { get; }
+    //    DateTimeOffset VolumeCreatedOn { get; }
 
-        string VolumeSerialNumber { get; }
+     //   string SerialNumber { get; }
 
-        List<MFTInformation> FileReferences { get; }
-        List<string> DirectoryNames { get; }
+       
+ 
     }
 }

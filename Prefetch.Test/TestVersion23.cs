@@ -21,20 +21,20 @@ namespace Prefetch.Test
             pf.RunCount.Should().Be(1);
 
             pf.VolumeCount.Should().Be(1);
-            pf.VolumeDeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME1");
-            pf.VolumeSerialNumber.Should().Be("E8EAB8B5");
-            pf.VolumeCreatedOn.Should().Be(DateTimeOffset.Parse("2016-01-16T13:53:13.1093750-07:00"));
+            pf.VolumeInformation[0].DeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME1");
+            pf.VolumeInformation[0].SerialNumber.Should().Be("E8EAB8B5");
+            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T13:53:13.1093750-07:00"));
 
-            pf.DirectoryNames.Count.Should().Be(13);
-            pf.DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\USERS\PUBLIC");
+            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(13);
+            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\USERS\PUBLIC");
 
-            pf.FileReferences.Count.Should().Be(84);
+            pf.VolumeInformation[0].FileReferences.Count.Should().Be(84);
 
             pf.Filenames.Count.Should().Be(66);
             pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\ADVAPI32.DLL");
 
-            pf.FileReferences[1].MFTEntryNumber.Should().Be((ulong) 352);
-            pf.FileReferences[1].MFTSequenceNumber.Should().Be(null);
+            pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 352);
+            pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(null);
         }
 
         [Test]
@@ -52,20 +52,20 @@ namespace Prefetch.Test
             pf.RunCount.Should().Be(2);
 
             pf.VolumeCount.Should().Be(1);
-            pf.VolumeDeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME2");
-            pf.VolumeSerialNumber.Should().Be("88008C2F");
-            pf.VolumeCreatedOn.Should().Be(DateTimeOffset.Parse("2016-01-16T14:15:18.1093750-07:00"));
+            pf.VolumeInformation[0].DeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME2");
+            pf.VolumeInformation[0].SerialNumber.Should().Be("88008C2F");
+            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T14:15:18.1093750-07:00"));
 
-            pf.DirectoryNames.Count.Should().Be(8);
-            pf.DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
+            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(8);
+            pf.VolumeInformation[0].DirectoryNames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\GLOBALIZATION\SORTING");
 
-            pf.FileReferences.Count.Should().Be(45);
+            pf.VolumeInformation[0].FileReferences.Count.Should().Be(45);
 
             pf.Filenames.Count.Should().Be(37);
             pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\KERNELBASE.DLL");
 
-            pf.FileReferences[2].MFTEntryNumber.Should().Be((ulong) 25654);
-            pf.FileReferences[2].MFTSequenceNumber.Should().Be(1);
+            pf.VolumeInformation[0].FileReferences[2].MFTEntryNumber.Should().Be((ulong) 25654);
+            pf.VolumeInformation[0].FileReferences[2].MFTSequenceNumber.Should().Be(1);
         }
 
         [Test]

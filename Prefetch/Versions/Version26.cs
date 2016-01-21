@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Prefetch.Other;
 
 namespace Prefetch
 {
@@ -91,60 +92,61 @@ namespace Prefetch
             Filenames.AddRange(fileNames);
 
             var volumeInfoBytes = rawBytes.Skip(VolumesInfoOffset).Take(VolumesInfoSize).ToArray();
-            var volumeDevicePathOffset = BitConverter.ToInt32(volumeInfoBytes, 0);
-            var volDevicePathNumChars = BitConverter.ToInt32(volumeInfoBytes, 4);
 
-            //TODO for all versions, need to loop to get all volumes, not just first one, based on VolumeCount
+            VolumeInformation = new List<VolumeInfo>();
 
-            VolumeDeviceName =
-                Encoding.Unicode.GetString(
-                    rawBytes.Skip(VolumesInfoOffset + volumeDevicePathOffset).Take(volDevicePathNumChars*2).ToArray());
-
-            var ct = BitConverter.ToInt64(volumeInfoBytes, 8);
-            VolumeCreatedOn = DateTimeOffset.FromFileTime(ct);
-
-            VolumeSerialNumber = BitConverter.ToInt32(volumeInfoBytes, 16).ToString("X");
-
-            var fileRefOffset = BitConverter.ToInt32(volumeInfoBytes, 20);
-            var fileRefSize = BitConverter.ToInt32(volumeInfoBytes, 24);
-
-
-            var dirStringsOffset = BitConverter.ToInt32(volumeInfoBytes, 28);
-            var numDirectoryStrings = BitConverter.ToInt32(volumeInfoBytes, 32);
-
-
-            //filerefs are at VolumesInfoOffset + fileRefOffset
-            var fileRefsIndex = VolumesInfoOffset + fileRefOffset;
-            var fileRefBytes = rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
-
-            var fileRefVer = BitConverter.ToInt32(fileRefBytes, 0);
-            var numFileRefs = BitConverter.ToInt32(fileRefBytes, 4);
-
-            tempIndex = 8;
-
-            FileReferences = new List<MFTInformation>();
-
-            while (tempIndex < fileRefBytes.Length && FileReferences.Count < numFileRefs)
+            for (int j = 0; j < VolumeCount; j++)
             {
-                FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
-                tempIndex += 8;
-            }
+                var skipSize = j * 104;
+                var volBytes = volumeInfoBytes.Skip(skipSize).Take(104).ToArray();
 
-            DirectoryNames = new List<string>();
+                var volDevOffset = BitConverter.ToInt32(volBytes, 0);
+                var volDevNumChar = BitConverter.ToInt32(volBytes, 4);
 
-            var dirStringsIndex = VolumesInfoOffset + dirStringsOffset;
-            var dirStringsBytes = rawBytes.Skip(dirStringsIndex).ToArray();
+                var ct = BitConverter.ToInt64(volBytes, 8);
 
-            tempIndex = 0;
-            for (var i = 0; i < numDirectoryStrings; i++)
-            {
-                var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex)*2 + 2;
-                // double the count since its unicode and add 2 extra for null char
-                tempIndex += 2;
-                var dirName = Encoding.Unicode.GetString(dirStringsBytes, tempIndex, dirCharCount).Trim('\0');
-                DirectoryNames.Add(dirName);
+                var devName = Encoding.Unicode.GetString(
+                                    rawBytes.Skip(VolumesInfoOffset + volDevOffset).Take(volDevNumChar * 2).ToArray());
 
-                tempIndex += dirCharCount;
+                var sn = BitConverter.ToInt32(volBytes, 16).ToString("X");
+
+                VolumeInformation.Add(new VolumeInfo(volDevOffset, DateTimeOffset.FromFileTime(ct), sn, devName));
+
+                var fileRefOffset = BitConverter.ToInt32(volBytes, 20);
+                var fileRefSize = BitConverter.ToInt32(volBytes, 24);
+
+                var dirStringsOffset = BitConverter.ToInt32(volBytes, 28);
+                var numDirectoryStrings = BitConverter.ToInt32(volBytes, 32);
+
+                //filerefs are at VolumesInfoOffset + fileRefOffset
+                var fileRefsIndex = VolumesInfoOffset + fileRefOffset;
+                var fileRefBytes = rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
+
+                var fileRefVer = BitConverter.ToInt32(fileRefBytes, 0);
+                var numFileRefs = BitConverter.ToInt32(fileRefBytes, 4);
+
+                tempIndex = 8;
+
+                while (tempIndex < fileRefBytes.Length && VolumeInformation.Last().FileReferences.Count < numFileRefs)
+                {
+                    VolumeInformation.Last().FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
+                    tempIndex += 8;
+                }
+
+                var dirStringsIndex = VolumesInfoOffset + dirStringsOffset;
+                var dirStringsBytes = rawBytes.Skip(dirStringsIndex).ToArray();
+
+                tempIndex = 0;
+                for (var k = 0; k < numDirectoryStrings; k++)
+                {
+                    var dirCharCount = BitConverter.ToInt16(dirStringsBytes, tempIndex) * 2 + 2;
+                    // double the count since its Unicode and add 2 extra for null char
+                    tempIndex += 2;
+                    var dirName = Encoding.Unicode.GetString(dirStringsBytes, tempIndex, dirCharCount).Trim('\0');
+                    VolumeInformation.Last().DirectoryNames.Add(dirName);
+
+                    tempIndex += dirCharCount;
+                }
             }
         }
 
@@ -163,12 +165,9 @@ namespace Prefetch
         public int VolumeCount { get; }
         public int VolumesInfoSize { get; }
         public List<DateTimeOffset> LastRunTimes { get; }
+        public List<VolumeInfo> VolumeInformation { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
-        public string VolumeDeviceName { get; }
-        public DateTimeOffset VolumeCreatedOn { get; }
-        public string VolumeSerialNumber { get; }
-        public List<MFTInformation> FileReferences { get; }
-        public List<string> DirectoryNames { get; }
+      
     }
 }

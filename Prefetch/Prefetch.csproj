@@ -57,6 +57,7 @@
     <Compile Include="Versions\Version23.cs" />
     <Compile Include="Versions\Version26.cs" />
     <Compile Include="Versions\Version30.cs" />
+    <Compile Include="Other\VolumeInfo.cs" />
     <Compile Include="XpressStream\Xpress2.cs" />
   </ItemGroup>
   <ItemGroup>
