@@ -36,7 +36,7 @@ namespace Prefetch.Test
         public void InvalidFileShouldThrowException()
         {
             var badFile = Path.Combine(BadPath, "notAPrefetch.pf");
-            Action action = () => Prefetch.Open(badFile);
+            Action action = () => PrefetchFile.Open(badFile);
 
             action.ShouldThrow<Exception>().WithMessage("Invalid signature! Should be 'SCCA'");
         }
@@ -48,7 +48,7 @@ namespace Prefetch.Test
             {
                 foreach (var file in Directory.GetFiles(allPath, "*.pf"))
                 {
-                    var pf = Prefetch.Open(file);
+                    var pf = PrefetchFile.Open(file);
 
                     pf.Should().NotBe(null);
 

@@ -12,7 +12,7 @@ namespace Prefetch.Test
         public void TestVistaExplorerPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.WinVistaPath, @"EXPLORER.EXE-7A3328DA.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
             pf.Header.ExecutableFilename.Should().Be("EXPLORER.EXE");
             pf.Header.Hash.Should().Be("7A3328DA");
@@ -41,9 +41,9 @@ namespace Prefetch.Test
         public void TestWin7DCodePfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win7Path, @"DCODEDCODEDCODEDCODEDCODEDCOD-9054DA3F.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
-           // Prefetch.DumpToJson(pf, true, @"D:\temp\win7DCODEDCODEDCODEDCODEDCODEDCOD.json");
+           // PrefetchFile.DumpToJson(pf, true, @"D:\temp\win7DCODEDCODEDCODEDCODEDCODEDCOD.json");
 
             pf.Header.ExecutableFilename.Should().Be("DCODEDCODEDCODEDCODEDCODEDCOD");
             pf.Header.Hash.Should().Be("9054DA3F");
@@ -83,9 +83,9 @@ namespace Prefetch.Test
         public void TestWin7CalcPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win7Path, @"CALC.EXE-77FDF17F.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
-            //Prefetch.DumpToJson(pf, true, @"D:\temp\win7calc.json");
+            //PrefetchFile.DumpToJson(pf, true, @"D:\temp\win7calc.json");
 
             pf.Header.ExecutableFilename.Should().Be("CALC.EXE");
             pf.Header.Hash.Should().Be("77FDF17F");
@@ -116,7 +116,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win7Path, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.VistaOrWin7);
@@ -128,7 +128,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.WinVistaPath, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 var totalDirs = 0;
                 foreach (var volumeInfo in pf.VolumeInformation)

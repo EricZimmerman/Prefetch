@@ -8,7 +8,7 @@ using ServiceStack.Text;
 
 namespace Prefetch
 {
-    public class Prefetch
+    public class PrefetchFile
     {
         private const int Signature = 0x41434353;
 

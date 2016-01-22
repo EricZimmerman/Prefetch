@@ -12,7 +12,7 @@ namespace Prefetch.Test
         public void TestWin10ChromePfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win10Path, @"CHROME.EXE-B3BA7868.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
             pf.Header.ExecutableFilename.Should().Be("CHROME.EXE");
             pf.Header.Hash.Should().Be("B3BA7868");
@@ -45,9 +45,9 @@ namespace Prefetch.Test
         public void TestWin10DcodeDecodePfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win10Path, @"DCODEDCODEDCODEDCODEDCODEDCOD-E65B9FE8.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
-            //Prefetch.DumpToJson(pf, true, @"D:\temp\DCODEDCODEDCODEDCODEDCODEDCOD.json");
+            //PrefetchFile.DumpToJson(pf, true, @"D:\temp\DCODEDCODEDCODEDCODEDCODEDCOD.json");
 
             pf.Header.ExecutableFilename.Should().Be("DCODEDCODEDCODEDCODEDCODEDCOD");
             pf.Header.Hash.Should().Be("E65B9FE8");
@@ -89,9 +89,9 @@ namespace Prefetch.Test
         public void TestWin10DevEnvPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win10Path, @"DEVENV.EXE-854D7862.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
-            //Prefetch.DumpToJson(pf, true, @"D:\temp\DEVENV.json");
+            //PrefetchFile.DumpToJson(pf, true, @"D:\temp\DEVENV.json");
 
             pf.Header.ExecutableFilename.Should().Be("DEVENV.EXE");
             pf.Header.Hash.Should().Be("854D7862");
@@ -127,7 +127,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win10Path, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 var totalDirs = 0;
                 foreach (var volumeInfo in pf.VolumeInformation)

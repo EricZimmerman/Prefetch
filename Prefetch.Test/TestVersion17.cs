@@ -12,7 +12,7 @@ namespace Prefetch.Test
         public void Test2k3CmdPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win2k3Path, @"CMD.EXE-087B4001.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
             pf.Header.ExecutableFilename.Should().Be("CMD.EXE");
             pf.Header.Hash.Should().Be("87B4001");
@@ -41,9 +41,9 @@ namespace Prefetch.Test
         public void TestXPCalcPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.WinXpPath, @"CALC.EXE-02CD573A.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
-//            Prefetch.DumpToJson(pf,true,@"D:\temp\out.json");
+//            PrefetchFile.DumpToJson(pf,true,@"D:\temp\out.json");
 
             pf.Header.ExecutableFilename.Should().Be("CALC.EXE");
             pf.Header.Hash.Should().Be("2CD573A");
@@ -73,7 +73,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win2k3Path, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.WinXpOrWin2K3);
@@ -85,7 +85,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.WinXpPath, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 pf.TotalDirectoryCount.Should().Be(-1);
 

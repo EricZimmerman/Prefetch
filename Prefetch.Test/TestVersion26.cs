@@ -12,9 +12,9 @@ namespace Prefetch.Test
         public void TestWin2012R2RegEditPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win2012R2Path, @"NOTEPAD.EXE-D8414F97.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
-            // Prefetch.DumpToJson(pf, true, @"D:\temp\out.json");
+            // PrefetchFile.DumpToJson(pf, true, @"D:\temp\out.json");
 
             pf.Header.ExecutableFilename.Should().Be("NOTEPAD.EXE");
             pf.Header.Hash.Should().Be("D8414F97");
@@ -48,7 +48,7 @@ namespace Prefetch.Test
         public void TestWin2012RegEditPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win2012Path, @"REGEDIT.EXE-90FEEA06.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
             pf.Header.ExecutableFilename.Should().Be("REGEDIT.EXE");
             pf.Header.Hash.Should().Be("90FEEA06");
@@ -81,7 +81,7 @@ namespace Prefetch.Test
         public void TestWin8ChromePfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win8xPath, @"CALC.EXE-77FDF17F.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
             pf.Header.ExecutableFilename.Should().Be("CALC.EXE");
             pf.Header.Hash.Should().Be("77FDF17F");
@@ -114,7 +114,7 @@ namespace Prefetch.Test
         public void TestWin8CmdPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win8xPath, @"_CMD.EXE-4A81B364.pf");
-            var pf = Prefetch.Open(file);
+            var pf = PrefetchFile.Open(file);
 
             pf.Header.ExecutableFilename.Should().Be("CMD.EXE");
             pf.Header.Hash.Should().Be("4A81B364");
@@ -145,7 +145,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win2012Path, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.Win8xOrWin2012x);
@@ -153,7 +153,7 @@ namespace Prefetch.Test
 
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win2012R2Path, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 pf.SourceFilename.Should().Be(file);
                 pf.Header.Version.Should().Be(Version.Win8xOrWin2012x);
@@ -165,7 +165,7 @@ namespace Prefetch.Test
         {
             foreach (var file in Directory.GetFiles(TestPrefetchMain.Win8xPath, "*.pf"))
             {
-                var pf = Prefetch.Open(file);
+                var pf = PrefetchFile.Open(file);
 
                 var totalDirs = 0;
                 foreach (var volumeInfo in pf.VolumeInformation)
