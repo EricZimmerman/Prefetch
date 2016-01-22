@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Prefetch.Other;
 
 namespace Prefetch
 {
     public enum Version
     {
+        [Description("Windows XP or Windows Server 2003")]
         WinXpOrWin2K3 = 17,
+        [Description("Windows Vista or Windows 7")]
         VistaOrWin7 = 23,
+        [Description("Windows 8.0, Windows 8.1, or Windows Server 2012(R2)")]
         Win8xOrWin2012x = 26,
+        [Description("Windows 10")]
         Win10 = 30
     }
 
