@@ -90,6 +90,8 @@
     <None Include="TestFiles\Win2k3\NOTEPAD.EXE-336351A9.pf" />
     <None Include="TestFiles\Win7\CALC.EXE-77FDF17F.pf" />
     <None Include="TestFiles\Win7\CMD.EXE-4A81B364.pf" />
+    <None Include="TestFiles\Win7\DCODEDCODEDCODEDCODEDCODEDCOD-9054DA3F.pf" />
+    <None Include="TestFiles\Win7\DCODEDCODEDCODEDCODEDCODEDCOD-94896A93.pf" />
     <None Include="TestFiles\Win7\DRVINST.EXE-5F8E77CD.pf" />
     <None Include="TestFiles\Win7\EXPLORER.EXE-A80E4F97.pf" />
     <None Include="TestFiles\Win7\NOTEPAD.EXE-D8414F97.pf" />

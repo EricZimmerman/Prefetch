@@ -38,12 +38,54 @@ namespace Prefetch.Test
         }
 
         [Test]
+        public void TestWin7DCodePfProperties()
+        {
+            var file = Path.Combine(TestPrefetchMain.Win7Path, @"DCODEDCODEDCODEDCODEDCODEDCOD-9054DA3F.pf");
+            var pf = Prefetch.Open(file);
+
+           // Prefetch.DumpToJson(pf, true, @"D:\temp\win7DCODEDCODEDCODEDCODEDCODEDCOD.json");
+
+            pf.Header.ExecutableFilename.Should().Be("DCODEDCODEDCODEDCODEDCODEDCOD");
+            pf.Header.Hash.Should().Be("9054DA3F");
+            pf.Header.FileSize.Should().Be(29746);
+            pf.LastRunTimes[0].Should().Be(DateTimeOffset.Parse("2016-01-22T09: 23:16.3416250-07:00"));
+            pf.RunCount.Should().Be(5);
+
+            pf.VolumeCount.Should().Be(2);
+            pf.VolumeInformation[0].DeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME2");
+            pf.VolumeInformation[0].SerialNumber.Should().Be("88008C2F");
+            pf.VolumeInformation[0].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-16T14:15:18.1093750-07:00"));
+
+            pf.VolumeInformation[0].DirectoryNames.Count.Should().Be(14);
+            pf.VolumeInformation[0].DirectoryNames[3].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME2\USERS\E\APPDATA\LOCAL");
+
+            pf.VolumeInformation[0].FileReferences.Count.Should().Be(63);
+
+            pf.VolumeInformation[1].DeviceName.Should().Be(@"\DEVICE\HARDDISKVOLUME3");
+            pf.VolumeInformation[1].SerialNumber.Should().Be("E892367F");
+            pf.VolumeInformation[1].CreationTime.Should().Be(DateTimeOffset.Parse("2016-01-22T09:11:36.5781250-07:00"));
+
+            pf.VolumeInformation[1].DirectoryNames.Count.Should().Be(2);
+            pf.VolumeInformation[1].DirectoryNames[1].Should()
+                .Be(@"\DEVICE\HARDDISKVOLUME3\TEMP\222");
+
+            pf.VolumeInformation[1].FileReferences.Count.Should().Be(3);
+
+            pf.Filenames.Count.Should().Be(50);
+            pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\WOW64CPU.DLL");
+
+            pf.VolumeInformation[1].FileReferences[1].MFTEntryNumber.Should().Be((ulong)37);
+            pf.VolumeInformation[1].FileReferences[1].MFTSequenceNumber.Should().Be(1);
+        }
+
+        [Test]
         public void TestWin7CalcPfProperties()
         {
             var file = Path.Combine(TestPrefetchMain.Win7Path, @"CALC.EXE-77FDF17F.pf");
             var pf = Prefetch.Open(file);
 
-            Prefetch.DumpToJson(pf, true, @"D:\temp\win7calc.json");
+            //Prefetch.DumpToJson(pf, true, @"D:\temp\win7calc.json");
 
             pf.Header.ExecutableFilename.Should().Be("CALC.EXE");
             pf.Header.Hash.Should().Be("77FDF17F");
