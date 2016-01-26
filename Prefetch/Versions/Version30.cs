@@ -72,7 +72,6 @@ namespace Prefetch
             var unknown2 = BitConverter.ToInt32(fileInfoBytes, 128);
 
             var fileMetricsBytes = new byte[FileMetricsCount * 32];
-            //rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
             Buffer.BlockCopy(rawBytes, FileMetricsOffset, fileMetricsBytes,0, FileMetricsCount * 32);
             var tempIndex = 0;
 
@@ -88,7 +87,7 @@ namespace Prefetch
 
             TraceChains = new List<TraceChain>();
 
-            var traceChainBytes = new byte[8 * TraceChainsCount]; //rawBytes.Skip(TraceChainsOffset).Take(8*TraceChainsCount).ToArray();
+            var traceChainBytes = new byte[8 * TraceChainsCount]; 
             Buffer.BlockCopy(rawBytes, TraceChainsOffset, traceChainBytes, 0, 8 * TraceChainsCount);
             var traceIndex = 0;
             var traceChainTempBuffer = new byte[8];
@@ -100,7 +99,7 @@ namespace Prefetch
             }
 
 
-            var filenameStringsBytes = new byte[FilenameStringsSize];// rawBytes.Skip(FilenameStringsOffset).Take(FilenameStringsSize).ToArray();
+            var filenameStringsBytes = new byte[FilenameStringsSize];
             Buffer.BlockCopy(rawBytes, FilenameStringsOffset, filenameStringsBytes, 0, FilenameStringsSize);
 
             var filenamesRaw = Encoding.Unicode.GetString(filenameStringsBytes);
@@ -110,7 +109,7 @@ namespace Prefetch
 
             Filenames.AddRange(fileNames);
 
-            var volumeInfoBytes = new byte[VolumesInfoSize];// rawBytes.Skip(VolumesInfoOffset).Take(VolumesInfoSize).ToArray();
+            var volumeInfoBytes = new byte[VolumesInfoSize];
             Buffer.BlockCopy(rawBytes, VolumesInfoOffset, volumeInfoBytes, 0, VolumesInfoSize);
 
             VolumeInformation = new List<VolumeInfo>();
@@ -122,7 +121,6 @@ namespace Prefetch
             for (var j = 0; j < VolumeCount; j++)
             {
                 var skipSize = j*96;
-               // var volBytes = volumeInfoBytes.Skip(skipSize).Take(96).ToArray();
                 Buffer.BlockCopy(volumeInfoBytes, skipSize, volBytes, 0, 96);
 
                 var volDevOffset = BitConverter.ToInt32(volBytes, 0);
@@ -146,7 +144,7 @@ namespace Prefetch
 
                 //filerefs are at VolumesInfoOffset + fileRefOffset
                 var fileRefsIndex = VolumesInfoOffset + fileRefOffset;
-                var fileRefBytes = new byte[fileRefSize];// rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
+                var fileRefBytes = new byte[fileRefSize];
                 Buffer.BlockCopy(rawBytes, fileRefsIndex, fileRefBytes, 0, fileRefSize);
 
                 var fileRefVer = BitConverter.ToInt32(fileRefBytes, 0);
@@ -164,7 +162,7 @@ namespace Prefetch
                 }
 
                 var dirStringsIndex = VolumesInfoOffset + dirStringsOffset;
-                var dirStringsBytes = new byte[rawBytes.Length - dirStringsIndex];// rawBytes.Skip(dirStringsIndex).ToArray();
+                var dirStringsBytes = new byte[rawBytes.Length - dirStringsIndex];
                 Buffer.BlockCopy(rawBytes, dirStringsIndex, dirStringsBytes, 0, rawBytes.Length - dirStringsIndex);
 
                 tempIndex = 0;
