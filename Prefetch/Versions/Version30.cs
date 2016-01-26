@@ -15,7 +15,10 @@ namespace Prefetch
 
             RawBytes = rawBytes;
 
-            Header = new Header(rawBytes.Take(84).ToArray());
+            var headerBytes = new byte[84];
+            Buffer.BlockCopy(rawBytes, 0, headerBytes, 0, 84);
+
+            Header = new Header(headerBytes);
 
             var fi = new FileInfo(sourceFilename);
             SourceCreatedOn = new DateTimeOffset(fi.CreationTimeUtc);
@@ -23,7 +26,8 @@ namespace Prefetch
             SourceAccessedOn = new DateTimeOffset(fi.LastAccessTimeUtc);
 
             //TODO factor out creation of File info blocks
-            var fileInfoBytes = rawBytes.Skip(84).Take(224).ToArray();
+            var fileInfoBytes = new byte[224];  
+            Buffer.BlockCopy(rawBytes, 84, fileInfoBytes, 0, 224);
 
             FileMetricsOffset = BitConverter.ToInt32(fileInfoBytes, 0);
             FileMetricsCount = BitConverter.ToInt32(fileInfoBytes, 4);
@@ -42,7 +46,9 @@ namespace Prefetch
             //at offset 36 there are 8 unknown values, seemingly empty
             TotalDirectoryCount = BitConverter.ToInt32(fileInfoBytes, 36);
 
-            var runtimeBytes = fileInfoBytes.Skip(44).Take(64).ToArray();
+            var runtimeBytes = new byte[64];
+            Buffer.BlockCopy(fileInfoBytes, 44, runtimeBytes, 0, 64);
+            //var runtimeBytes = fileInfoBytes.Skip(44).Take(64).ToArray();
 
             LastRunTimes = new List<DateTimeOffset>();
 
@@ -65,28 +71,37 @@ namespace Prefetch
             //at offset 136 there is 88 bytes of unknown, empty values
             var unknown2 = BitConverter.ToInt32(fileInfoBytes, 128);
 
-            var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
+            var fileMetricsBytes = new byte[FileMetricsCount * 32];
+            //rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
+            Buffer.BlockCopy(rawBytes, FileMetricsOffset, fileMetricsBytes,0, FileMetricsCount * 32);
             var tempIndex = 0;
 
             FileMetrics = new List<FileMetric>();
 
+            var fileMetricsTempBuffer = new byte[32];
             while (tempIndex < fileMetricsBytes.Length)
             {
-                FileMetrics.Add(new FileMetric(fileMetricsBytes.Skip(tempIndex).Take(32).ToArray(), false));
+                Buffer.BlockCopy(fileMetricsBytes, tempIndex, fileMetricsTempBuffer, 0, 32);
+                FileMetrics.Add(new FileMetric(fileMetricsBytes, false));
                 tempIndex += 32;
             }
 
             TraceChains = new List<TraceChain>();
 
-            var traceChainBytes = rawBytes.Skip(TraceChainsOffset).Take(8*TraceChainsCount).ToArray();
+            var traceChainBytes = new byte[8 * TraceChainsCount]; //rawBytes.Skip(TraceChainsOffset).Take(8*TraceChainsCount).ToArray();
+            Buffer.BlockCopy(rawBytes, TraceChainsOffset, traceChainBytes, 0, 8 * TraceChainsCount);
             var traceIndex = 0;
+            var traceChainTempBuffer = new byte[8];
             while (traceIndex < traceChainBytes.Length)
             {
-                TraceChains.Add(new TraceChain(traceChainBytes.Skip(traceIndex).Take(8).ToArray(), true));
+                Buffer.BlockCopy(traceChainBytes, traceIndex, traceChainTempBuffer, 0, 8);
+                TraceChains.Add(new TraceChain(traceChainTempBuffer, true));
                 traceIndex += 8;
             }
 
-            var filenameStringsBytes = rawBytes.Skip(FilenameStringsOffset).Take(FilenameStringsSize).ToArray();
+
+            var filenameStringsBytes = new byte[FilenameStringsSize];// rawBytes.Skip(FilenameStringsOffset).Take(FilenameStringsSize).ToArray();
+            Buffer.BlockCopy(rawBytes, FilenameStringsOffset, filenameStringsBytes, 0, FilenameStringsSize);
 
             var filenamesRaw = Encoding.Unicode.GetString(filenameStringsBytes);
             var fileNames = filenamesRaw.Split(new[] {'\0'}, StringSplitOptions.RemoveEmptyEntries);
@@ -95,24 +110,29 @@ namespace Prefetch
 
             Filenames.AddRange(fileNames);
 
-            var volumeInfoBytes = rawBytes.Skip(VolumesInfoOffset).Take(VolumesInfoSize).ToArray();
+            var volumeInfoBytes = new byte[VolumesInfoSize];// rawBytes.Skip(VolumesInfoOffset).Take(VolumesInfoSize).ToArray();
+            Buffer.BlockCopy(rawBytes, VolumesInfoOffset, volumeInfoBytes, 0, VolumesInfoSize);
 
             VolumeInformation = new List<VolumeInfo>();
 
             //TODO factor this out as they are all the same?
             //TODO better yet, add in all the unique stuff so it can be researched
+
+            var volBytes = new byte[96];
             for (var j = 0; j < VolumeCount; j++)
             {
                 var skipSize = j*96;
-                var volBytes = volumeInfoBytes.Skip(skipSize).Take(96).ToArray();
+               // var volBytes = volumeInfoBytes.Skip(skipSize).Take(96).ToArray();
+                Buffer.BlockCopy(volumeInfoBytes, skipSize, volBytes, 0, 96);
 
                 var volDevOffset = BitConverter.ToInt32(volBytes, 0);
                 var volDevNumChar = BitConverter.ToInt32(volBytes, 4);
 
                 var ct = BitConverter.ToInt64(volBytes, 8);
 
-                var devName = Encoding.Unicode.GetString(
-                    rawBytes.Skip(VolumesInfoOffset + volDevOffset).Take(volDevNumChar*2).ToArray());
+                var devNameBytes = new byte[volDevNumChar * 2];
+                Buffer.BlockCopy(rawBytes, VolumesInfoOffset + volDevOffset, devNameBytes, 0, volDevNumChar * 2);
+                var devName = Encoding.Unicode.GetString(devNameBytes);
 
                 var sn = BitConverter.ToInt32(volBytes, 16).ToString("X");
 
@@ -126,22 +146,26 @@ namespace Prefetch
 
                 //filerefs are at VolumesInfoOffset + fileRefOffset
                 var fileRefsIndex = VolumesInfoOffset + fileRefOffset;
-                var fileRefBytes = rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
+                var fileRefBytes = new byte[fileRefSize];// rawBytes.Skip(fileRefsIndex).Take(fileRefSize).ToArray();
+                Buffer.BlockCopy(rawBytes, fileRefsIndex, fileRefBytes, 0, fileRefSize);
 
                 var fileRefVer = BitConverter.ToInt32(fileRefBytes, 0);
                 var numFileRefs = BitConverter.ToInt32(fileRefBytes, 4);
 
                 tempIndex = 8;
 
+                var tempFileRefBytes = new byte[8];
                 while (tempIndex < fileRefBytes.Length && VolumeInformation.Last().FileReferences.Count < numFileRefs)
                 {
+                    Buffer.BlockCopy(fileRefBytes, tempIndex, tempFileRefBytes, 0, 8);
                     VolumeInformation.Last()
-                        .FileReferences.Add(new MFTInformation(fileRefBytes.Skip(tempIndex).Take(8).ToArray()));
+                        .FileReferences.Add(new MFTInformation(tempFileRefBytes));
                     tempIndex += 8;
                 }
 
                 var dirStringsIndex = VolumesInfoOffset + dirStringsOffset;
-                var dirStringsBytes = rawBytes.Skip(dirStringsIndex).ToArray();
+                var dirStringsBytes = new byte[rawBytes.Length - dirStringsIndex];// rawBytes.Skip(dirStringsIndex).ToArray();
+                Buffer.BlockCopy(rawBytes, dirStringsIndex, dirStringsBytes, 0, rawBytes.Length - dirStringsIndex);
 
                 tempIndex = 0;
                 for (var k = 0; k < numDirectoryStrings; k++)
