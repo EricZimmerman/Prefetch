@@ -31,6 +31,8 @@ namespace Prefetch.Test
 
             pf.VolumeInformation[0].FileReferences.Count.Should().Be(284);
 
+            pf.LastRunTimes.Count.Should().Be(8);
+
             pf.Filenames.Count.Should().Be(282);
             pf.Filenames[3].Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\WINDOWS\SYSTEM32\KERNEL32.DLL");
 

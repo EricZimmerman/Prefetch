@@ -52,7 +52,7 @@ namespace Prefetch
 
             LastRunTimes = new List<DateTimeOffset>();
 
-            for (var i = 0; i < 7; i++)
+            for (var i = 0; i < 8; i++)
             {
                 var rawTime = BitConverter.ToInt64(runtimeBytes, i*8);
 
