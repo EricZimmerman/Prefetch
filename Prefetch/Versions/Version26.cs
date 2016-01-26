@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Prefetch.Other;
@@ -15,6 +16,11 @@ namespace Prefetch
             RawBytes = rawBytes;
 
             Header = new Header(rawBytes.Take(84).ToArray());
+
+            var fi = new FileInfo(sourceFilename);
+            SourceCreatedOn = new DateTimeOffset(fi.CreationTimeUtc);
+            SourceModifiedOn = new DateTimeOffset(fi.LastWriteTimeUtc);
+            SourceAccessedOn = new DateTimeOffset(fi.LastAccessTimeUtc);
 
             //TODO factor out creation of File info blocks
             var fileInfoBytes = rawBytes.Skip(84).Take(224).ToArray();
@@ -46,7 +52,7 @@ namespace Prefetch
 
                 if (rawTime > 0)
                 {
-                    LastRunTimes.Add(DateTimeOffset.FromFileTime(rawTime));
+                    LastRunTimes.Add(DateTimeOffset.FromFileTime(rawTime).ToUniversalTime());
                 }
             }
 
@@ -58,7 +64,6 @@ namespace Prefetch
             var unknown1 = BitConverter.ToInt32(fileInfoBytes, 132);
             //at offset 136 there is 88 bytes of unknown, empty values
             var unknown2 = BitConverter.ToInt32(fileInfoBytes, 128);
-
 
             var fileMetricsBytes = rawBytes.Skip(FileMetricsOffset).Take(FileMetricsCount*32).ToArray();
             var tempIndex = 0;
@@ -109,7 +114,7 @@ namespace Prefetch
 
                 var sn = BitConverter.ToInt32(volBytes, 16).ToString("X");
 
-                VolumeInformation.Add(new VolumeInfo(volDevOffset, DateTimeOffset.FromFileTime(ct), sn, devName));
+                VolumeInformation.Add(new VolumeInfo(volDevOffset, DateTimeOffset.FromFileTime(ct).ToUniversalTime(), sn, devName));
 
                 var fileRefOffset = BitConverter.ToInt32(volBytes, 20);
                 var fileRefSize = BitConverter.ToInt32(volBytes, 24);
@@ -153,6 +158,9 @@ namespace Prefetch
         public byte[] RawBytes { get; }
 
         public string SourceFilename { get; }
+        public DateTimeOffset SourceCreatedOn { get; }
+        public DateTimeOffset SourceModifiedOn { get; }
+        public DateTimeOffset SourceAccessedOn { get; }
         public Header Header { get; }
 
         public int FileMetricsOffset { get; }

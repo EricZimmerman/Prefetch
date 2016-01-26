@@ -21,6 +21,9 @@ namespace Prefetch
     {
         byte[] RawBytes { get; }
         string SourceFilename { get; }
+        DateTimeOffset SourceCreatedOn { get; }
+        DateTimeOffset SourceModifiedOn { get; }
+        DateTimeOffset SourceAccessedOn { get; }
 
         Header Header { get; }
 
