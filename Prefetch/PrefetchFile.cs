@@ -3,8 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Prefetch.XpressStream;
-using ServiceStack;
-using ServiceStack.Text;
 
 namespace Prefetch
 {
@@ -12,17 +10,7 @@ namespace Prefetch
     {
         private const int Signature = 0x41434353;
 
-        public static void DumpToJson(IPrefetch pf, bool pretty, string outFile)
-        {
-            if (pretty)
-            {
-                File.WriteAllText(outFile, pf.Dump());
-            }
-            else
-            {
-                File.WriteAllText(outFile, pf.ToJson());
-            }
-        }
+
 
         public static void SavePrefetch(string file, IPrefetch pf)
         {
