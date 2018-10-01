@@ -15,6 +15,9 @@ namespace Prefetch
 
             RawBytes = rawBytes;
 
+            try
+            {
+
             var headerBytes = new byte[84];
             Buffer.BlockCopy(rawBytes, 0, headerBytes, 0, 84);
 
@@ -154,7 +157,15 @@ namespace Prefetch
                     tempIndex += dirCharCount;
                 }
             }
+            }
+            catch (Exception)
+            {
+                ParsingError = true;
+            }
+
         }
+
+
 
         public byte[] RawBytes { get; }
 
@@ -178,6 +189,7 @@ namespace Prefetch
         public List<VolumeInfo> VolumeInformation { get; }
         public int RunCount { get; }
         public List<string> Filenames { get; }
+        public bool ParsingError { get; }
         public List<FileMetric> FileMetrics { get; }
         public List<TraceChain> TraceChains { get; }
     }

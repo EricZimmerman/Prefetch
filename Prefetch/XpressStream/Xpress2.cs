@@ -37,12 +37,12 @@ namespace Prefetch.XpressStream
 
             ret = RtlDecompressBufferEx(CompressionFormatXpressHuff, outBuf, outBuf.Length, buffer, buffer.Length,
                 ref dstSize, workSpace);
-            if (ret == 0)
-            {
+            //if (ret == 0)
+           // {
                 return outBuf;
-            }
+         //   }
 
-            return null;
+            //return null;
         }
     }
 }

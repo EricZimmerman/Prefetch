@@ -44,6 +44,17 @@ namespace Prefetch.Test
         }
 
         [Test]
+        public void OneOff()
+        {
+            var f = @"C:\Temp\outLW\vss010\Windows\prefetch\SETUP.EXE-C52DC467.pf";
+        
+            var pf = PrefetchFile.Open(f);
+
+         //   pf.Should().NotBe(null);
+
+        }
+
+        [Test]
         public void SignatureShouldBeSCCA()
         {
             foreach (var allPath in _allPaths)

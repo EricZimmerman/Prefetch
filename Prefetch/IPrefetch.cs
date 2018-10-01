@@ -52,6 +52,9 @@ namespace Prefetch
 
         int RunCount { get; }
 
+        bool ParsingError { get; }
+
+
         List<string> Filenames { get; }
 
         List<FileMetric> FileMetrics { get; }

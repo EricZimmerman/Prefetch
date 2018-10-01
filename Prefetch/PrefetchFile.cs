@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Prefetch.XpressStream;
+
 
 namespace Prefetch
 {
     public class PrefetchFile
     {
         private const int Signature = 0x41434353;
-
-
-
+        
         public static void SavePrefetch(string file, IPrefetch pf)
         {
             File.WriteAllBytes(file, pf.RawBytes);

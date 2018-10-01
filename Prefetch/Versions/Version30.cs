@@ -15,7 +15,9 @@ namespace Prefetch
 
             RawBytes = rawBytes;
 
-            var headerBytes = new byte[84];
+            try
+            {
+  var headerBytes = new byte[84];
             Buffer.BlockCopy(rawBytes, 0, headerBytes, 0, 84);
 
             Header = new Header(headerBytes);
@@ -177,6 +179,13 @@ namespace Prefetch
                     tempIndex += dirCharCount;
                 }
             }
+            }
+            catch (Exception )
+            {
+                ParsingError = true;
+            }
+
+          
         }
 
         public byte[] RawBytes { get; }
@@ -200,6 +209,9 @@ namespace Prefetch
         public List<DateTimeOffset> LastRunTimes { get; }
         public List<VolumeInfo> VolumeInformation { get; }
         public int RunCount { get; }
+        public bool ParsingError { get; }
+  
+
         public List<string> Filenames { get; }
         public List<FileMetric> FileMetrics { get; }
         public List<TraceChain> TraceChains { get; }
