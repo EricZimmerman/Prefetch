@@ -46,11 +46,14 @@ namespace Prefetch.Test
         [Test]
         public void OneOff()
         {
-            var f = @"C:\Temp\outLW\vss010\Windows\prefetch\SETUP.EXE-C52DC467.pf";
+            var f = @"C:\Temp\LECMD.EXE-45F8E4D9_3.pf";
         
             var pf = PrefetchFile.Open(f);
 
-         //   pf.Should().NotBe(null);
+            pf.RunCount.Should().BeGreaterThan(0);
+            pf.RunCount.Should().Be(3);
+
+            //   pf.Should().NotBe(null);
 
         }
 

@@ -38,6 +38,8 @@ namespace Prefetch
 
                 //update rawBytes with decompressed bytes so the rest works
                 rawBytes = decom;
+
+               
             }
 
             //at this point we have prefetch bytes we can process
