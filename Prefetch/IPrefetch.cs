@@ -19,6 +19,7 @@ namespace Prefetch
 
     public interface IPrefetch
     {
+       
         byte[] RawBytes { get; }
         string SourceFilename { get; }
         DateTimeOffset SourceCreatedOn { get; }

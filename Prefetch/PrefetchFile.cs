@@ -17,11 +17,12 @@ namespace Prefetch
             File.WriteAllBytes(file, pf.RawBytes);
         }
 
-        public static IPrefetch Open(string file)
+        public static IPrefetch Open(Stream stream, string file)
         {
             IPrefetch pf = null;
 
-            var rawBytes = File.ReadAllBytes(file);
+            var rawBytes = new byte[stream.Length];
+            stream.Read(rawBytes, (int) 0, (int) (rawBytes.Length));
 
             var tempSig = Encoding.ASCII.GetString(rawBytes, 0, 3);
 
@@ -72,6 +73,15 @@ namespace Prefetch
             }
 
             return pf;
+        }
+
+        public static IPrefetch Open(string file)
+        {
+            using (var fs = new FileStream(file,FileMode.Open))
+            {
+                return Open(fs,file);
+            }
+
         }
     }
 }

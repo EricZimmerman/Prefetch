@@ -23,10 +23,17 @@ namespace Prefetch
 
             Header = new Header(headerBytes);
 
-            var fi = new FileInfo(sourceFilename);
-            SourceCreatedOn = new DateTimeOffset(fi.CreationTimeUtc);
-            SourceModifiedOn = new DateTimeOffset(fi.LastWriteTimeUtc);
-            SourceAccessedOn = new DateTimeOffset(fi.LastAccessTimeUtc);
+            try
+            {
+                var fi = new FileInfo(sourceFilename);
+                SourceCreatedOn = new DateTimeOffset(fi.CreationTimeUtc);
+                SourceModifiedOn = new DateTimeOffset(fi.LastWriteTimeUtc);
+                SourceAccessedOn = new DateTimeOffset(fi.LastAccessTimeUtc);
+            }
+            catch (Exception e)
+            {
+                
+            }
 
             //TODO factor out creation of File info blocks
             var fileInfoBytes = new byte[224];

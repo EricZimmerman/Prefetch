@@ -46,9 +46,11 @@ namespace Prefetch.Test
         [Test]
         public void OneOff()
         {
-            var f = @"C:\Temp\LECMD.EXE-45F8E4D9_3.pf";
+            var f = @"C:\temp\fsout.bin";
+
+            var ms = new FileStream(f,FileMode.Open);
         
-            var pf = PrefetchFile.Open(f);
+            var pf = PrefetchFile.Open(ms,"foo");
 
             pf.RunCount.Should().BeGreaterThan(0);
             pf.RunCount.Should().Be(3);
