@@ -77,7 +77,7 @@ namespace Prefetch
 
         public static IPrefetch Open(string file)
         {
-            using (var fs = new FileStream(file,FileMode.Open))
+            using (var fs = new FileStream(file,FileMode.Open,FileAccess.Read))
             {
                 return Open(fs,file);
             }
