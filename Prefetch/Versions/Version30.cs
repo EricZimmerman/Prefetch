@@ -77,10 +77,21 @@ namespace Prefetch
 
             RunCount = BitConverter.ToInt32(fileInfoBytes, 124);
 
-            if (RunCount == 0)
+            var runcountPre = BitConverter.ToInt32(fileInfoBytes, 124 - 4);
+
+            if (runcountPre == 0)
+            {
+                //old format
+            }
+            else
             {
                 RunCount = BitConverter.ToInt32(fileInfoBytes, 124 - 8); //newer versions of windows 10 shift the counter backward 8 bytes
             }
+
+//            if (RunCount == 0 || RunCount<LastRunTimes.Count)
+//            {
+//                
+//            }
 
             var unknown0 = BitConverter.ToInt32(fileInfoBytes, 128);
             var unknown1 = BitConverter.ToInt32(fileInfoBytes, 132);
