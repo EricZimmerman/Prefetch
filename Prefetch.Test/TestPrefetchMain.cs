@@ -46,11 +46,15 @@ namespace Prefetch.Test
         [Test]
         public void OneOff()
         {
-            var f = @"C:\temp\fsout.bin";
+            var f = @"C:\Temp\500sru\POWERSHELL.EXE-767FB1AE.pf";
 
-            var ms = new FileStream(f,FileMode.Open);
+            var ms = new FileStream(f,FileMode.Open,FileAccess.Read);
         
             var pf = PrefetchFile.Open(ms,"foo");
+
+
+            var aa = PrefetchFile.Open(f);
+
 
             pf.RunCount.Should().BeGreaterThan(0);
             pf.RunCount.Should().Be(3);
