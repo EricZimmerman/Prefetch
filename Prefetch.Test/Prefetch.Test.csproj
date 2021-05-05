@@ -3,6 +3,11 @@
     <TargetFrameworks>net46;net5.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="app.config" />
     <None Include="TestFiles\Bad\notAPrefetch.pf" />
     <None Include="TestFiles\Vista\CMD.EXE-89305D47.pf" />
@@ -61,20 +66,17 @@
     <None Include="TestFiles\XPPro\VERCLSID.EXE-3667BD89.pf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Prefetch\Prefetch.csproj"/>
+    <ProjectReference Include="..\Prefetch\Prefetch.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentAssertions">
       <Version>5.10.3</Version>
     </PackageReference>
     <PackageReference Include="NUnit">
-      <Version>3.13.1</Version>
+      <Version>3.13.2</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
