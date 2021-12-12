@@ -1,10 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net46;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>Eric Zimmerman</Company>
     <Authors>Eric Zimmerman</Authors>
+    <PackageVersion>1.1.0.1</PackageVersion>
+    <LangVersion>10</LangVersion>
+    <Title>Prefetch</Title>
+    <Description>Windows Prefetch parser. Supports all known versions from Windows XP to Windows 11</Description>
+    <Copyright>Eric Zimmerman</Copyright>
+    <PackageProjectUrl>https://github.com/EricZimmerman/Prefetch</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/EricZimmerman/Prefetch</RepositoryUrl>
+    <PackageTags>Windows Prefetch</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.1.0.1</AssemblyVersion>
+    <FileVersion>1.1.0.1</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\**" />

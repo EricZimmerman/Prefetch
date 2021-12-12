@@ -5,18 +5,18 @@ using System.Linq;
 using System.Text;
 using Prefetch.Other;
 
-namespace Prefetch
+namespace Prefetch.Versions;
+
+public class Version26 : IPrefetch
 {
-    public class Version26 : IPrefetch
+    public Version26(byte[] rawBytes, string sourceFilename)
     {
-        public Version26(byte[] rawBytes, string sourceFilename)
+        SourceFilename = sourceFilename;
+
+        RawBytes = rawBytes;
+
+        try
         {
-            SourceFilename = sourceFilename;
-
-            RawBytes = rawBytes;
-
-            try
-            {
 
             var headerBytes = new byte[84];
             Buffer.BlockCopy(rawBytes, 0, headerBytes, 0, 84);
@@ -30,7 +30,7 @@ namespace Prefetch
                 SourceModifiedOn = new DateTimeOffset(fi.LastWriteTimeUtc);
                 SourceAccessedOn = new DateTimeOffset(fi.LastAccessTimeUtc);
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 
             }
@@ -85,7 +85,7 @@ namespace Prefetch
 
             FileMetrics = new List<FileMetric>();
 
-             var fileMetricsTempBuffer = new byte[32];
+            var fileMetricsTempBuffer = new byte[32];
             while (tempIndex < fileMetricsBytes.Length)
             {
                 Buffer.BlockCopy(fileMetricsBytes, tempIndex, fileMetricsTempBuffer, 0, 32);
@@ -181,39 +181,38 @@ namespace Prefetch
                     tempIndex += dirCharCount;
                 }
             }
-            }
-            catch (Exception)
-            {
-                ParsingError = true;
-            }
-
+        }
+        catch (Exception)
+        {
+            ParsingError = true;
         }
 
-
-        public byte[] RawBytes { get; }
-
-        public string SourceFilename { get; }
-        public DateTimeOffset SourceCreatedOn { get; }
-        public DateTimeOffset SourceModifiedOn { get; }
-        public DateTimeOffset SourceAccessedOn { get; }
-        public Header Header { get; }
-
-        public int FileMetricsOffset { get; }
-        public int FileMetricsCount { get; }
-        public int TraceChainsOffset { get; }
-        public int TraceChainsCount { get; }
-        public int FilenameStringsOffset { get; }
-        public int FilenameStringsSize { get; }
-        public int VolumesInfoOffset { get; }
-        public int VolumeCount { get; }
-        public int VolumesInfoSize { get; }
-        public int TotalDirectoryCount { get; }
-        public List<DateTimeOffset> LastRunTimes { get; }
-        public List<VolumeInfo> VolumeInformation { get; }
-        public int RunCount { get; }
-        public List<string> Filenames { get; }
-        public bool ParsingError { get; }
-        public List<FileMetric> FileMetrics { get; }
-        public List<TraceChain> TraceChains { get; }
     }
+
+
+    public byte[] RawBytes { get; }
+
+    public string SourceFilename { get; }
+    public DateTimeOffset SourceCreatedOn { get; }
+    public DateTimeOffset SourceModifiedOn { get; }
+    public DateTimeOffset SourceAccessedOn { get; }
+    public Header Header { get; }
+
+    public int FileMetricsOffset { get; }
+    public int FileMetricsCount { get; }
+    public int TraceChainsOffset { get; }
+    public int TraceChainsCount { get; }
+    public int FilenameStringsOffset { get; }
+    public int FilenameStringsSize { get; }
+    public int VolumesInfoOffset { get; }
+    public int VolumeCount { get; }
+    public int VolumesInfoSize { get; }
+    public int TotalDirectoryCount { get; }
+    public List<DateTimeOffset> LastRunTimes { get; }
+    public List<VolumeInfo> VolumeInformation { get; }
+    public int RunCount { get; }
+    public List<string> Filenames { get; }
+    public bool ParsingError { get; }
+    public List<FileMetric> FileMetrics { get; }
+    public List<TraceChain> TraceChains { get; }
 }
