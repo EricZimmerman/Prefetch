@@ -5,7 +5,6 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>Eric Zimmerman</Company>
     <Authors>Eric Zimmerman</Authors>
-    <PackageVersion>1.1.0.1</PackageVersion>
     <LangVersion>10</LangVersion>
     <Title>Prefetch</Title>
     <Description>Windows Prefetch parser. Supports all known versions from Windows XP to Windows 11</Description>
@@ -16,10 +15,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyVersion>1.1.0.1</AssemblyVersion>
     <FileVersion>1.1.0.1</FileVersion>
+    <Version>1.1.0.1</Version>
+    <PackageVersion>1.1.0.1</PackageVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-  </ItemGroup>
 </Project>

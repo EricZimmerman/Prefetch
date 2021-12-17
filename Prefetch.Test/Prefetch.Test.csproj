@@ -9,7 +9,6 @@
     <None Remove="Properties\**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="TestFiles\Bad\notAPrefetch.pf" />
     <None Include="TestFiles\Vista\CMD.EXE-89305D47.pf" />
     <None Include="TestFiles\Vista\DLLHOST.EXE-893DDF55.pf" />
