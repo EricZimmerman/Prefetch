@@ -2,7 +2,7 @@
 
 namespace Prefetch.XpressStream;
 
-public class Xpress2
+public static class Xpress2
 {
 //        const ushort COMPRESSION_FORMAT_LZNT1 = 2;
 //        const ushort COMPRESSION_FORMAT_XPRESS = 3;

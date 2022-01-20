@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Prefetch.Other;
+using Serilog;
 
 namespace Prefetch.Versions;
 
@@ -33,8 +34,6 @@ public class Version30 : IPrefetch
             {
                 
             }
-
-            
 
             //TODO factor out creation of File info blocks
             var fileInfoBytes = new byte[224];  
@@ -88,11 +87,6 @@ public class Version30 : IPrefetch
                 RunCount = BitConverter.ToInt32(fileInfoBytes, 124 - 8); //newer versions of windows 10 shift the counter backward 8 bytes
             }
 
-//            if (RunCount == 0 || RunCount<LastRunTimes.Count)
-//            {
-//                
-//            }
-
             var unknown0 = BitConverter.ToInt32(fileInfoBytes, 128);
             var unknown1 = BitConverter.ToInt32(fileInfoBytes, 132);
             //at offset 136 there is 88 bytes of unknown, empty values
@@ -124,7 +118,6 @@ public class Version30 : IPrefetch
                 TraceChains.Add(new TraceChain(traceChainTempBuffer, true));
                 traceIndex += 8;
             }
-
 
             var filenameStringsBytes = new byte[FilenameStringsSize];
             Buffer.BlockCopy(rawBytes, FilenameStringsOffset, filenameStringsBytes, 0, FilenameStringsSize);
@@ -207,12 +200,9 @@ public class Version30 : IPrefetch
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.StackTrace);
-            Console.WriteLine(ex.Message);
+            Log.Error(ex,"Error processing {File}. Message: {Message}",sourceFilename,ex.Message);
             ParsingError = true;
         }
-
-          
     }
 
     public byte[] RawBytes { get; }

@@ -141,7 +141,7 @@ public class TestVersion30
 
 
             pf.SourceFilename.Should().Be(file);
-            pf.Header.Version.Should().Be(Version.Win10);
+            pf.Header.Version.Should().Be(Version.Win10OrWin11);
         }
     }
 }

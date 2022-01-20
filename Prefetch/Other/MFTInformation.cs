@@ -28,7 +28,7 @@ public class MFTInformation
         }
         else
         {
-            entryIndex2 = entryIndex2*16777216; //2^24
+            entryIndex2 *= 16777216; //2^24
             entryIndex = entryIndex1 + entryIndex2;
         }
 

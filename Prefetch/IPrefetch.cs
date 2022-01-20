@@ -13,8 +13,8 @@ public enum Version
     VistaOrWin7 = 23,
     [Description("Windows 8.0, Windows 8.1, or Windows Server 2012(R2)")]
     Win8xOrWin2012x = 26,
-    [Description("Windows 10")]
-    Win10 = 30
+    [Description("Windows 10 or Windows 11")]
+    Win10OrWin11 = 30
 }
 
 public interface IPrefetch

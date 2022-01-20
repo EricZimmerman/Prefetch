@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>Eric Zimmerman</Company>
@@ -13,9 +13,11 @@
     <RepositoryUrl>https://github.com/EricZimmerman/Prefetch</RepositoryUrl>
     <PackageTags>Windows Prefetch</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <AssemblyVersion>1.1.0.1</AssemblyVersion>
-    <FileVersion>1.1.0.1</FileVersion>
-    <Version>1.1.0.1</Version>
-    <PackageVersion>1.1.0.1</PackageVersion>
+    <Version>1.1.1.0</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Serilog">
+      <Version>2.10.0</Version>
+    </PackageReference>
+  </ItemGroup>
 </Project>

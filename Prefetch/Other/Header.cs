@@ -22,8 +22,8 @@ public class Header
             case (int) Version.Win8xOrWin2012x:
                 Version = Version.Win8xOrWin2012x;
                 break;
-            case (int) Version.Win10:
-                Version = Version.Win10;
+            case (int) Version.Win10OrWin11:
+                Version = Version.Win10OrWin11;
                 break;
         }
 

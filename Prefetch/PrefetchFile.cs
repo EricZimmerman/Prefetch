@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Prefetch.Versions;
 using Prefetch.XpressStream;
+using Serilog;
 
 
 namespace Prefetch;
@@ -15,6 +16,7 @@ public class PrefetchFile
         
     public static void SavePrefetch(string file, IPrefetch pf)
     {
+        Log.Debug("Writing raw bytes to {File}",file);
         File.WriteAllBytes(file, pf.RawBytes);
     }
 
@@ -30,6 +32,7 @@ public class PrefetchFile
         if (tempSig.Equals("MAM"))
         {
             //windows 10/11, so we need to decompress
+            Log.Debug("Found Windows 1x prefetch file. Decompressing",file);
             
             //Size of decompressed data is at offset 4
             var size = BitConverter.ToUInt32(rawBytes, 4);
@@ -64,7 +67,7 @@ public class PrefetchFile
             case Version.Win8xOrWin2012x:
                 pf = new Version26(rawBytes, file);
                 break;
-            case Version.Win10:
+            case Version.Win10OrWin11:
                 pf = new Version30(rawBytes, file);
                 break;
             default:
@@ -76,10 +79,8 @@ public class PrefetchFile
 
     public static IPrefetch Open(string file)
     {
-        using (var fs = new FileStream(file,FileMode.Open,FileAccess.Read))
-        {
-            return Open(fs,file);
-        }
-
+        Log.Debug("Opening {File}",file);
+        using var fs = new FileStream(file,FileMode.Open,FileAccess.Read);
+        return Open(fs,file);
     }
 }

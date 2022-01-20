@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Prefetch.Other;
+using Serilog;
 
 namespace Prefetch.Versions;
 
@@ -182,8 +183,9 @@ public class Version26 : IPrefetch
                 }
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Log.Error(ex,"Error processing {File}. Message: {Message}",sourceFilename,ex.Message);
             ParsingError = true;
         }
 
