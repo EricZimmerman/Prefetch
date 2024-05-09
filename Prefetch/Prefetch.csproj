@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/EricZimmerman/Prefetch</RepositoryUrl>
     <PackageTags>Windows Prefetch</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.2.2</Version>
+    <Version>1.2.3</Version>
 
     <PackageTags>pf, prefetch</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
