@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Company>Eric Zimmerman</Company>
     <Authors>Eric Zimmerman</Authors>
@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/EricZimmerman/Prefetch</RepositoryUrl>
     <PackageTags>Windows Prefetch</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>1.2.0</Version>
+    <Version>1.2.2</Version>
 
     <PackageTags>pf, prefetch</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -22,15 +22,15 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.10.0">    </PackageReference>
+    <PackageReference Include="Serilog" Version="3.1.1">    </PackageReference>
 
-    <None Include="../README.md" Pack="true" PackagePath=""/>
-    <None Include="../icon.png" Pack="true" PackagePath=""/>
+    <None Include="../README.md" Pack="true" PackagePath="" />
+    <None Include="../icon.png" Pack="true" PackagePath="" />
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MinVer" Version="4.3.0">
+    <PackageReference Include="MinVer" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
