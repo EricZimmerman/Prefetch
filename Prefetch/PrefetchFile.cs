@@ -68,7 +68,10 @@ public class PrefetchFile
                 pf = new Version26(rawBytes, file);
                 break;
             case Version.Win10OrWin11:
-                pf = new Version30(rawBytes, file);
+                pf = new Version30or31(rawBytes, file);
+                break;
+            case Version.Win11:
+                pf = new Version30or31(rawBytes, file);
                 break;
             default:
                 throw new Exception($"Unknown version '{fileVer:X}'");
