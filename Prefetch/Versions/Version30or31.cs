@@ -8,9 +8,9 @@ using Serilog;
 
 namespace Prefetch.Versions;
 
-public class Version30 : IPrefetch
+public class Version30or31 : IPrefetch
 {
-    public Version30(byte[] rawBytes, string sourceFilename)
+    public Version30or31(byte[] rawBytes, string sourceFilename)
     {
         SourceFilename = sourceFilename;
 
