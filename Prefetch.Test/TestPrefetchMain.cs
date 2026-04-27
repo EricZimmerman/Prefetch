@@ -46,7 +46,7 @@ public class TestPrefetchMain
     [Test]
     public void OneOff()
     {
-        var f = @"C:\Temp\500sru\POWERSHELL.EXE-767FB1AE.pf";
+        var f = @"C:\Windows\Prefetch\EDITPADPRO8.EXE-E3D60773.pf";
 
         var ms = new FileStream(f,FileMode.Open,FileAccess.Read);
         
