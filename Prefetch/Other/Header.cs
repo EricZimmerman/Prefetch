@@ -29,6 +29,7 @@ public class Header
                 Version = Version.Win11;
                 break;
         }
+        
 
         index += 4; //version
 
