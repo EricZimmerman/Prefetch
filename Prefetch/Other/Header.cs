@@ -41,8 +41,10 @@ public class Header
         FileSize = BitConverter.ToInt32(rawBytes, index);
         index += 4;
 
+        // 30 UTF-16 characters; a name that fills the field has no terminator
         var tempName = Encoding.Unicode.GetString(rawBytes, index, 60);
-        ExecutableFilename = tempName.Substring(0, tempName.IndexOf('\0')).Trim();
+        var nul = tempName.IndexOf('\0');
+        ExecutableFilename = (nul < 0 ? tempName : tempName.Substring(0, nul)).Trim();
 
         index += 60;
 

@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+  </Configurations>
+  <Project Path="Prefetch.Test/Prefetch.Test.csproj" />
+  <Project Path="Prefetch/Prefetch.csproj" />
+</Solution>

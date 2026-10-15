@@ -15,32 +15,24 @@ public class MFTInformation
             throw new ArgumentException("rawMFTInfo must be 8 bytes long!");
         }
 
-        var sequenceNumber = BitConverter.ToUInt16(rawMFTInfo, 6);
+        Parse(rawMFTInfo, 0);
+    }
 
-        ulong entryIndex = 0;
+    internal MFTInformation(byte[] buffer, int offset)
+    {
+        Helpers.EnsureRange(buffer, offset, 8, "MFT reference");
+        Parse(buffer, offset);
+    }
 
-        ulong entryIndex1 = BitConverter.ToUInt32(rawMFTInfo, 0);
-        ulong entryIndex2 = BitConverter.ToUInt16(rawMFTInfo, 4);
+    private void Parse(byte[] buffer, int offset)
+    {
+        // 48-bit entry number followed by a 16-bit sequence number
+        ulong entryLow = BitConverter.ToUInt32(buffer, offset);
+        ulong entryHigh = BitConverter.ToUInt16(buffer, offset + 4);
+        var sequenceNumber = BitConverter.ToUInt16(buffer, offset + 6);
 
-        if (entryIndex2 == 0)
-        {
-            entryIndex = entryIndex1;
-        }
-        else
-        {
-            entryIndex2 *= 16777216; //2^24
-            entryIndex = entryIndex1 + entryIndex2;
-        }
-
-        MFTEntryNumber = entryIndex;
-        MFTSequenceNumber = sequenceNumber;
-
-        if (sequenceNumber == 0)
-        {
-            MFTSequenceNumber = null;
-        }
-
-            
+        MFTEntryNumber = entryLow | (entryHigh << 32);
+        MFTSequenceNumber = sequenceNumber == 0 ? null : sequenceNumber;
     }
 
     public ulong? MFTEntryNumber { get; set; }

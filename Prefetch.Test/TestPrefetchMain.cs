@@ -9,15 +9,15 @@ namespace Prefetch.Test;
 [TestFixture]
 public class TestPrefetchMain
 {
-    public static string BadPath = @"..\..\TestFiles\Bad";
-    public static string Win7Path = @"..\..\TestFiles\Win7";
-    public static string Win10Path = @"..\..\TestFiles\Win10";
-    public static string WinXpPath = @"..\..\TestFiles\XPPro";
-    public static string Win8xPath = @"..\..\TestFiles\Win8x";
-    public static string Win2k3Path = @"..\..\TestFiles\Win2k3";
-    public static string Win2012Path = @"..\..\TestFiles\Win2012";
-    public static string WinVistaPath = @"..\..\TestFiles\Vista";
-    public static string Win2012R2Path = @"..\..\TestFiles\Win2012R2";
+    public static string BadPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Bad");
+    public static string Win7Path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Win7");
+    public static string Win10Path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Win10");
+    public static string WinXpPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "XPPro");
+    public static string Win8xPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Win8x");
+    public static string Win2k3Path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Win2k3");
+    public static string Win2012Path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Win2012");
+    public static string WinVistaPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Vista");
+    public static string Win2012R2Path = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestFiles", "Win2012R2");
 
     private readonly List<string> _allPaths = new List<string>
     {
@@ -41,26 +41,6 @@ public class TestPrefetchMain
             
 
         action.Should().Throw<Exception>().WithMessage("Invalid signature! Should be 'SCCA'");
-    }
-
-    [Test]
-    public void OneOff()
-    {
-        var f = @"C:\Windows\Prefetch\EDITPADPRO8.EXE-E3D60773.pf";
-
-        var ms = new FileStream(f,FileMode.Open,FileAccess.Read);
-        
-        var pf = PrefetchFile.Open(ms,"foo");
-
-
-        var aa = PrefetchFile.Open(f);
-
-
-        pf.RunCount.Should().BeGreaterThan(0);
-        pf.RunCount.Should().Be(3);
-
-        //   pf.Should().NotBe(null);
-
     }
 
     [Test]

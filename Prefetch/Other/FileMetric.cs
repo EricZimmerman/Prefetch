@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Prefetch.Other;
 
@@ -28,7 +27,7 @@ public class FileMetric
 
             Unknown3 = BitConverter.ToInt32(rawBytes, 20);
 
-            MFTInfo = new MFTInformation(rawBytes.Skip(24).Take(8).ToArray());
+            MFTInfo = new MFTInformation(rawBytes, 24);
         }
     }
 

@@ -36,11 +36,11 @@ public class TestVersion30
         pf.Filenames.Count.Should().Be(282);
         pf.Filenames[3].Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\WINDOWS\SYSTEM32\KERNEL32.DLL");
 
-        pf.VolumeInformation[0].FileReferences[5].MFTEntryNumber.Should().Be((ulong) 55125);
-        pf.VolumeInformation[0].FileReferences[5].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[0].FileReferences[4].MFTEntryNumber.Should().Be((ulong) 55125);
+        pf.VolumeInformation[0].FileReferences[4].MFTSequenceNumber.Should().Be(1);
 
-        pf.VolumeInformation[0].FileReferences[9].MFTEntryNumber.Should().Be((ulong) 117682);
-        pf.VolumeInformation[0].FileReferences[9].MFTSequenceNumber.Should().Be(2);
+        pf.VolumeInformation[0].FileReferences[8].MFTEntryNumber.Should().Be((ulong) 117682);
+        pf.VolumeInformation[0].FileReferences[8].MFTSequenceNumber.Should().Be(2);
     }
 
     [Test]
@@ -80,11 +80,11 @@ public class TestVersion30
         pf.Filenames.Count.Should().Be(57);
         pf.Filenames[3].Should().Be(@"\VOLUME{01d1217a9c4c6779-8c9f49ec}\WINDOWS\SYSTEM32\KERNEL32.DLL");
 
-        pf.VolumeInformation[1].FileReferences[12].MFTEntryNumber.Should().Be((ulong) 357876);
-        pf.VolumeInformation[1].FileReferences[12].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[1].FileReferences[11].MFTEntryNumber.Should().Be((ulong) 357876);
+        pf.VolumeInformation[1].FileReferences[11].MFTSequenceNumber.Should().Be(1);
 
-        pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 305846);
-        pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(2);
+        pf.VolumeInformation[0].FileReferences[0].MFTEntryNumber.Should().Be((ulong) 305846);
+        pf.VolumeInformation[0].FileReferences[0].MFTSequenceNumber.Should().Be(2);
     }
 
     [Test]
@@ -98,7 +98,7 @@ public class TestVersion30
         pf.Header.ExecutableFilename.Should().Be("DEVENV.EXE");
         pf.Header.Hash.Should().Be("854D7862");
         pf.Header.FileSize.Should().Be(380690);
-        pf.LastRunTimes[0].Should().Be(DateTimeOffset.Parse("2016-01-13T09: 50:34.6578416-07:00,"));
+        pf.LastRunTimes[0].Should().Be(DateTimeOffset.Parse("2016-01-13T09: 50:34.6578416-07:00"));
         pf.RunCount.Should().Be(54);
 
         pf.VolumeCount.Should().Be(1);
@@ -117,11 +117,11 @@ public class TestVersion30
             .Be(
                 @"\VOLUME{01d1217a9c4c6779-8c9f49ec}\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 14.0\COMMON7\IDE\MICROSOFT.VISUALSTUDIO.ACTIVITIES.DLL");
 
-        pf.VolumeInformation[0].FileReferences[6].MFTEntryNumber.Should().Be((ulong) 148922);
-        pf.VolumeInformation[0].FileReferences[6].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[0].FileReferences[5].MFTEntryNumber.Should().Be((ulong) 148922);
+        pf.VolumeInformation[0].FileReferences[5].MFTSequenceNumber.Should().Be(1);
 
-        pf.VolumeInformation[0].FileReferences[8].MFTEntryNumber.Should().Be((ulong) 219686);
-        pf.VolumeInformation[0].FileReferences[8].MFTSequenceNumber.Should().Be(2);
+        pf.VolumeInformation[0].FileReferences[7].MFTEntryNumber.Should().Be((ulong) 219686);
+        pf.VolumeInformation[0].FileReferences[7].MFTSequenceNumber.Should().Be(2);
     }
 
     [Test]

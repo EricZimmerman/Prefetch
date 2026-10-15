@@ -33,8 +33,8 @@ public class TestVersion23
         pf.Filenames.Count.Should().Be(66);
         pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME1\WINDOWS\SYSTEM32\ADVAPI32.DLL");
 
-        pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 352);
-        pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(null);
+        pf.VolumeInformation[0].FileReferences[0].MFTEntryNumber.Should().Be((ulong) 352);
+        pf.VolumeInformation[0].FileReferences[0].MFTSequenceNumber.Should().Be(null);
     }
 
     [Test]
@@ -75,8 +75,8 @@ public class TestVersion23
         pf.Filenames.Count.Should().Be(50);
         pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\WOW64CPU.DLL");
 
-        pf.VolumeInformation[1].FileReferences[1].MFTEntryNumber.Should().Be((ulong)37);
-        pf.VolumeInformation[1].FileReferences[1].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[1].FileReferences[0].MFTEntryNumber.Should().Be((ulong)37);
+        pf.VolumeInformation[1].FileReferences[0].MFTSequenceNumber.Should().Be(1);
     }
 
     [Test]
@@ -107,8 +107,8 @@ public class TestVersion23
         pf.Filenames.Count.Should().Be(37);
         pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\KERNELBASE.DLL");
 
-        pf.VolumeInformation[0].FileReferences[2].MFTEntryNumber.Should().Be((ulong) 25654);
-        pf.VolumeInformation[0].FileReferences[2].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 25654);
+        pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(1);
     }
 
     [Test]

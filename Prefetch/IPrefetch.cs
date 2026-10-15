@@ -55,7 +55,15 @@ public interface IPrefetch
 
     int RunCount { get; }
 
+    /// <summary>
+    ///     True when any part of the file could not be parsed; see <see cref="ParseErrors" />.
+    /// </summary>
     bool ParsingError { get; }
+
+    /// <summary>
+    ///     A message for each problem found while parsing. Sections that failed are left empty or partly filled.
+    /// </summary>
+    List<string> ParseErrors { get; }
 
 
     List<string> Filenames { get; }

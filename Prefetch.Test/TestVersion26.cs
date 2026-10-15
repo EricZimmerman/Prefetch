@@ -37,11 +37,11 @@ public class TestVersion26
         pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\ADVAPI32.DLL");
 
         //For whatever reason the sequence # is 1 for both of these when looking at the entry # in the MFT using X-Ways
-        pf.VolumeInformation[0].FileReferences[5].MFTEntryNumber.Should().Be((ulong) 0);
-        pf.VolumeInformation[0].FileReferences[5].MFTSequenceNumber.Should().Be(null);
+        pf.VolumeInformation[0].FileReferences[4].MFTEntryNumber.Should().Be((ulong) 0);
+        pf.VolumeInformation[0].FileReferences[4].MFTSequenceNumber.Should().Be(null);
 
-        pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 18972);
-        pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(null);
+        pf.VolumeInformation[0].FileReferences[0].MFTEntryNumber.Should().Be((ulong) 18972);
+        pf.VolumeInformation[0].FileReferences[0].MFTSequenceNumber.Should().Be(null);
     }
 
     [Test]
@@ -70,11 +70,11 @@ public class TestVersion26
         pf.Filenames.Count.Should().Be(42);
 
         //For whatever reason the sequence # is 1 for both of these when looking at the entry #
-        pf.VolumeInformation[0].FileReferences[5].MFTEntryNumber.Should().Be((ulong) 27324);
-        pf.VolumeInformation[0].FileReferences[5].MFTSequenceNumber.Should().Be(null);
+        pf.VolumeInformation[0].FileReferences[4].MFTEntryNumber.Should().Be((ulong) 27324);
+        pf.VolumeInformation[0].FileReferences[4].MFTSequenceNumber.Should().Be(null);
 
-        pf.VolumeInformation[0].FileReferences[9].MFTEntryNumber.Should().Be((ulong) 29316);
-        pf.VolumeInformation[0].FileReferences[9].MFTSequenceNumber.Should().Be(null);
+        pf.VolumeInformation[0].FileReferences[8].MFTEntryNumber.Should().Be((ulong) 29316);
+        pf.VolumeInformation[0].FileReferences[8].MFTSequenceNumber.Should().Be(null);
     }
 
     [Test]
@@ -103,11 +103,11 @@ public class TestVersion26
         pf.Filenames.Count.Should().Be(37);
         pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\KERNELBASE.DLL");
 
-        pf.VolumeInformation[0].FileReferences[5].MFTEntryNumber.Should().Be((ulong) 43858);
-        pf.VolumeInformation[0].FileReferences[5].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[0].FileReferences[4].MFTEntryNumber.Should().Be((ulong) 43858);
+        pf.VolumeInformation[0].FileReferences[4].MFTSequenceNumber.Should().Be(1);
 
-        pf.VolumeInformation[0].FileReferences[9].MFTEntryNumber.Should().Be((ulong) 46917);
-        pf.VolumeInformation[0].FileReferences[9].MFTSequenceNumber.Should().Be(1);
+        pf.VolumeInformation[0].FileReferences[8].MFTEntryNumber.Should().Be((ulong) 46917);
+        pf.VolumeInformation[0].FileReferences[8].MFTSequenceNumber.Should().Be(1);
     }
 
     [Test]
@@ -136,8 +136,8 @@ public class TestVersion26
         pf.Filenames.Count.Should().Be(12);
         pf.Filenames[3].Should().Be(@"\DEVICE\HARDDISKVOLUME2\WINDOWS\SYSTEM32\KERNELBASE.DLL");
 
-        pf.VolumeInformation[0].FileReferences[1].MFTEntryNumber.Should().Be((ulong) 44760);
-        pf.VolumeInformation[0].FileReferences[1].MFTSequenceNumber.Should().Be(null);
+        pf.VolumeInformation[0].FileReferences[0].MFTEntryNumber.Should().Be((ulong) 44760);
+        pf.VolumeInformation[0].FileReferences[0].MFTSequenceNumber.Should().Be(null);
     }
 
     [Test]
