@@ -11,8 +11,10 @@ public class PrefetchFile
 {
     private const int Signature = 0x41434353;
 
-    // Real prefetch files are at most a few MB; this stops a corrupt size field from forcing a huge allocation
+    // Real prefetch files are at most a few MB; these stop a corrupt size field or a large non-prefetch
+    // stream from forcing a huge allocation
     private const uint MaxDecompressedSize = 64 * 1024 * 1024;
+    private const long MaxFileSize = 64 * 1024 * 1024;
 
     public static void SavePrefetch(string file, IPrefetch pf)
     {
@@ -31,30 +33,19 @@ public class PrefetchFile
     /// </exception>
     public static IPrefetch Open(Stream stream, string file)
     {
-        var rawBytes = ReadAll(stream);
+        var rawBytes = ReadPrefetchBytes(stream);
 
-        if (rawBytes.Length >= 8 && rawBytes[0] == 'M' && rawBytes[1] == 'A' && rawBytes[2] == 'M')
+        if (IsCompressed(rawBytes))
         {
             //windows 10/11, so we need to decompress
             Log.Debug("Found Windows 1x prefetch file. Decompressing {File}",file);
             rawBytes = Decompress(rawBytes);
+            CheckSignature(rawBytes);
         }
 
         //at this point we have prefetch bytes we can process
 
-        if (rawBytes.Length < 8)
-        {
-            throw new PrefetchParseException($"File is too small to be a prefetch file ({rawBytes.Length} bytes)", 0, "Header");
-        }
-
         var fileVer = (Version) BitConverter.ToInt32(rawBytes, 0);
-
-        var sig = BitConverter.ToInt32(rawBytes, 4);
-
-        if (sig != Signature)
-        {
-            throw new PrefetchParseException("Invalid signature! Should be 'SCCA'", 4, "Signature");
-        }
 
         return fileVer switch
         {
@@ -73,24 +64,69 @@ public class PrefetchFile
         return Open(fs,file);
     }
 
-    private static byte[] ReadAll(Stream stream)
+    /// <summary>
+    ///     Reads the rest of <paramref name="stream" />, checking the first 8 bytes before reading everything else so
+    ///     that non-prefetch data (e.g. when probing alternate data streams) is rejected cheaply.
+    /// </summary>
+    private static byte[] ReadPrefetchBytes(Stream stream)
     {
-        var rawBytes = new byte[stream.Length];
-        var read = 0;
+        var length = stream.Length - stream.Position;
 
-        // Read can return fewer bytes than asked for
-        while (read < rawBytes.Length)
+        if (length < 8)
         {
-            var n = stream.Read(rawBytes, read, rawBytes.Length - read);
+            throw new PrefetchParseException($"File is too small to be a prefetch file ({length} bytes)", 0, "Header");
+        }
+
+        if (length > MaxFileSize)
+        {
+            throw new PrefetchParseException($"File size {length} is larger than the {MaxFileSize} byte limit", 0, "Header");
+        }
+
+        var rawBytes = new byte[length];
+        ReadExactly(stream, rawBytes, 0, 8);
+
+        if (!IsCompressed(rawBytes))
+        {
+            CheckSignature(rawBytes);
+        }
+
+        ReadExactly(stream, rawBytes, 8, rawBytes.Length - 8);
+
+        return rawBytes;
+    }
+
+    private static void ReadExactly(Stream stream, byte[] buffer, int offset, int count)
+    {
+        // Read can return fewer bytes than asked for
+        var read = 0;
+        while (read < count)
+        {
+            var n = stream.Read(buffer, offset + read, count - read);
             if (n == 0)
             {
-                throw new PrefetchParseException($"Stream ended after {read} of {rawBytes.Length} bytes", read);
+                throw new PrefetchParseException($"Stream ended after {offset + read} of {buffer.Length} bytes", offset + read);
             }
 
             read += n;
         }
+    }
 
-        return rawBytes;
+    private static bool IsCompressed(byte[] rawBytes)
+    {
+        return rawBytes[0] == 'M' && rawBytes[1] == 'A' && rawBytes[2] == 'M';
+    }
+
+    private static void CheckSignature(byte[] rawBytes)
+    {
+        if (rawBytes.Length < 8)
+        {
+            throw new PrefetchParseException($"File is too small to be a prefetch file ({rawBytes.Length} bytes)", 0, "Header");
+        }
+
+        if (BitConverter.ToInt32(rawBytes, 4) != Signature)
+        {
+            throw new PrefetchParseException("Invalid signature! Should be 'SCCA'", 4, "Signature");
+        }
     }
 
     /// <summary>

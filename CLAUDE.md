@@ -25,6 +25,8 @@ dotnet pack --configuration Release                           # package includes
 - Sections: header (84 bytes) → file information → file metrics → trace chains → filename strings (UTF-16, NUL-separated) → volume information. Each volume has a device path, file references and directory strings, all at offsets relative to the start of the volume information.
 - File references: an 8-byte header (version 1, used in prefetch 17), or a 16-byte header (version 3, prefetch 23+) with 8 unknown bytes before the array. `MFTInformation` is a 48-bit entry number plus a 16-bit sequence number, where sequence 0 becomes `null`.
 - **`XpressStream/Xpress2`** is a managed LZ77+Huffman decoder ([MS-XCA] 2.2.4). It throws `InvalidDataException` on corrupt data, which `PrefetchFile` wraps in `PrefetchParseException`. The Win10 samples are its main correctness check.
+- **`PrefetchHash`** calculates the hash in the file name/header (`Header.HashValue`) from an upper-cased NT device path: an XP algorithm for version 17 and a Vista algorithm for 23+. Windows 10/11 store `\VOLUME{...}` paths, so you have to rebuild `\DEVICE\HARDDISKVOLUMEn` paths to check them. Hosting processes and packaged apps also hash part of their command line or package, so their hash can't be reproduced from the path (see `PrefetchHashTests`).
+- `Open(stream, ...)` checks the first 8 bytes (`MAM` or `SCCA`) before reading the rest, and rejects input over 64 MB. PECmd relies on this to probe arbitrary alternate data streams cheaply.
 - Logging goes through Serilog's static `Log`; the library doesn't configure sinks.
 
 ### Error-handling model (important)

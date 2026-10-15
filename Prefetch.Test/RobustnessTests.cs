@@ -199,6 +199,17 @@ public class RobustnessTests
     }
 
     [Test]
+    public void NonPrefetchStreamIsRejectedAfterReadingEightBytes()
+    {
+        var stream = new CountingStream(new byte[1024 * 1024]);
+
+        Action action = () => PrefetchFile.Open(stream, "host.txt:Zone.Identifier");
+
+        action.Should().Throw<PrefetchParseException>().WithMessage("Invalid signature*");
+        stream.BytesRead.Should().Be(8);
+    }
+
+    [Test]
     public void UnknownVersionThrows()
     {
         var bytes = Build(17);
@@ -351,6 +362,22 @@ public class RobustnessTests
         dir.CopyTo(bytes, vol + dirsOffset + 2);
 
         return bytes;
+    }
+
+    private sealed class CountingStream : MemoryStream
+    {
+        public CountingStream(byte[] buffer) : base(buffer)
+        {
+        }
+
+        public long BytesRead { get; private set; }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            var n = base.Read(buffer, offset, count);
+            BytesRead += n;
+            return n;
+        }
     }
 
     /// <summary>

@@ -48,7 +48,8 @@ public class Header
 
         index += 60;
 
-        Hash = BitConverter.ToInt32(rawBytes, index).ToString("X");
+        HashValue = BitConverter.ToUInt32(rawBytes, index);
+        Hash = HashValue.ToString("X");
     }
 
     public Version Version { get; }
@@ -59,6 +60,11 @@ public class Header
     public string ExecutableFilename { get; }
 
     public string Hash { get; }
+
+    /// <summary>
+    ///     <see cref="Hash" /> as a number, for comparing with <see cref="PrefetchHash" />.
+    /// </summary>
+    public uint HashValue { get; }
 
     public override string ToString()
     {
